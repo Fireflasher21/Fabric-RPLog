@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "fabricrplog",
+  "version": "${version}",
+  "name": "Fabric-RPLog",
+  "description": "Fabric RPLog für Aegorin",
+  "authors": [
+    "Fireflasher"
+  ],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/Fabricrplog/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "fireflasher.fabricrplog.client.FabricrplogClient"
+    ],
+    "main": [
+      "fireflasher.fabricrplog.Fabricrplog"
+    ]
+  },
+  "mixins": [
+    "Fabricrplog.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.10.7",
+    "fabric": "*",
+    "minecraft": "1.17.1"
+  }
+}
