@@ -5,9 +5,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
+import java.nio.Buffer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -23,14 +23,7 @@ public class ChatLogger {
     public static void chatFilter(String chat){
 
 
-        List<String> Channellist = new ArrayList<>();
-        Channellist.add("[Flüstern]");
-        Channellist.add("[Leise]");
-        Channellist.add("[Reden]");
-        Channellist.add("[Rufen]");
-        Channellist.add("[PRufen]");
-        Channellist.add("[Schreien]");
-
+        List<String> Channellist = new DefaultConfig().getList();
 
         for(String Channel:Channellist){
             if(chat.contains(Channel)){
@@ -95,14 +88,19 @@ public class ChatLogger {
     private static void addMessage(String chat){
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(log, true));
+            BufferedReader br = new BufferedReader(new FileReader(log));
             LocalDateTime date = LocalDateTime.now();
             if ( !log.toString().contains(date.format(DATE))){setup();}
 
             String time = date.format(TIME);
             time = "["+ time +"] ";
-            String message =  "\n" + time + chat;
-            bw.append(message);
+            String message =time + chat;
+
+            br.read();
+            if(br.lines().toList().isEmpty()) bw.append(message);
+            else bw.append("\n" + message);
             bw.close();
+
         } catch (IOException e) {
             LOGGER.warn("RPLog konnte nicht in " + log.toString() + " schreiben");
         }
