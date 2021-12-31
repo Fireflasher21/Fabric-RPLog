@@ -5,7 +5,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.nio.Buffer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -18,12 +17,14 @@ public class ChatLogger {
     private static File log;
     public static final DateTimeFormatter DATE  = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static final DateTimeFormatter TIME  = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private static List<String> Channellist = new DefaultConfig().getList();
 
 
     public static void chatFilter(String chat){
 
-
-        List<String> Channellist = new DefaultConfig().getList();
+        for(String debug: Channellist){
+            LOGGER.info(debug + " chatFilter");
+        }
 
         for(String Channel:Channellist){
             if(chat.contains(Channel)){

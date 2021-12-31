@@ -3,7 +3,6 @@ package fireflasher.fabricrplog.client;
 import fireflasher.fabricrplog.ChatLogger;
 import fireflasher.fabricrplog.DefaultConfig;
 import fireflasher.fabricrplog.listener.ChatAccess;
-import fireflasher.fabricrplog.mixin.ChatAccessMixin;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -12,8 +11,6 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.MessageType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.time.LocalDateTime;
 
 @Environment(EnvType.CLIENT)
 public class FabricrplogClient implements ClientModInitializer {

@@ -11,14 +11,15 @@ import java.util.Scanner;
 
 public class DefaultConfig {
 
-    String ModsDir = FabricrplogClient.getModsFolder();
-    private File ConfigFile = null;
+    private File ConfigFile;
     private final List<String> Keywords = new ArrayList<>();
+    private final String ModsDir = FabricrplogClient.getModsFolder();
 
     private static final Logger LOGGER = LogManager.getLogger();
 
+
     public void reloadConfig() {
-        if (this.ConfigFile == null) {
+        if (this.ConfigFile == null || !this.ConfigFile.exists()) {
             this.ConfigFile = new File( ModsDir, "config.yml");
             try {
                 ConfigFile.createNewFile();
@@ -32,7 +33,7 @@ public class DefaultConfig {
 
             while(sc.hasNextLine()){
                 String line = sc.nextLine();
-                this.Keywords.add(line);
+                Keywords.add(line);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -51,7 +52,7 @@ public class DefaultConfig {
         if (Keywords.isEmpty()) {
             reloadConfig();
         }
-        return Keywords;
+        return this.Keywords;
     }
 
     public void saveConfig() {
@@ -59,7 +60,7 @@ public class DefaultConfig {
             return;
         }
         try{
-            for(String write: Keywords){
+            for(String write: this.Keywords){
                 BufferedWriter bw = new BufferedWriter(new FileWriter(ConfigFile, true));
                 BufferedReader br = new BufferedReader(new FileReader(ConfigFile ));
 
@@ -80,7 +81,7 @@ public class DefaultConfig {
         this.ConfigFile = new File(ModsDir + "config.yml");
         if (ConfigFile.exists()) {
             LOGGER.info("Config erfolgreich geladen");
-
+            reloadConfig();
         } else {
             reloadConfig();
             saveConfig();
