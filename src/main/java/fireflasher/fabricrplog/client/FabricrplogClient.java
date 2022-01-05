@@ -15,16 +15,19 @@ import org.apache.logging.log4j.Logger;
 @Environment(EnvType.CLIENT)
 public class FabricrplogClient implements ClientModInitializer {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static DefaultConfig CONFIG = new DefaultConfig();
+    public static ChatLogger CHATLOGGER;
 
     @Override
     public void onInitializeClient() {
 
 
-        new DefaultConfig().setup();
-        ChatLogger.setup();
+        CONFIG.setup();
+        CHATLOGGER = new ChatLogger();
+        CHATLOGGER.setup();
 
         chatregister();
+
     }
 
     private void chatregister(){

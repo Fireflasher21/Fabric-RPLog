@@ -80,7 +80,7 @@ public class DefaultConfig {
         new File(ModsDir).mkdir();
         this.ConfigFile = new File(ModsDir + "config.yml");
         if (ConfigFile.exists()) {
-            LOGGER.info("Config erfolgreich geladen");
+            LOGGER.info("[RPLog] Config erfolgreich geladen");
             reloadConfig();
         } else {
             reloadConfig();
