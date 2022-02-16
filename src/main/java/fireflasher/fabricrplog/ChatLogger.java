@@ -22,10 +22,11 @@ public class ChatLogger {
 
     public static void chatFilter(String chat){
 
+        /* TODO: Debug
         for(String debug: Channellist){
             LOGGER.info(debug + " chatFilter");
         }
-
+        */
         for(String Channel:Channellist){
             if(chat.contains(Channel)){
                 addMessage(chat);
@@ -93,9 +94,8 @@ public class ChatLogger {
             LocalDateTime date = LocalDateTime.now();
             if ( !log.toString().contains(date.format(DATE))){setup();}
 
-            String time = date.format(TIME);
-            time = "["+ time +"] ";
-            String message =time + chat;
+            String time = "[" + date.format(TIME) + "] ";
+            String message = time + chat;
 
             br.read();
             if(br.lines().toList().isEmpty()) bw.append(message);

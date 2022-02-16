@@ -39,13 +39,13 @@ public class FabricrplogClient implements ClientModInitializer {
                     (type, message, sender) -> {
                         ChatLogger.chatFilter(message.getString());
                     });
-            /*
+
             ((ChatAccess)client.inGameHud).registerChatListener(
                     MessageType.SYSTEM,
                     (type, message, sender) -> {
                         ChatLogger.chatFilter(message.getString());
                     });
-
+            /*
             ((ChatAccess)client.inGameHud).registerChatListener(
                     MessageType.GAME_INFO,
                     (type, message, sender) -> {
