@@ -13,11 +13,12 @@ import java.util.zip.ZipOutputStream;
 
 public class ChatLogger {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static Logger LOGGER = Fabricrplog.LOGGER;
     private static File log;
     public static final DateTimeFormatter DATE  = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static final DateTimeFormatter TIME  = DateTimeFormatter.ofPattern("HH:mm:ss");
     private static List<String> Channellist = FabricrplogClient.CONFIG.getList();
+    private static String timedmessage = "";
 
 
     public static void chatFilter(String chat){
@@ -99,8 +100,13 @@ public class ChatLogger {
 
             br.read();
             if(br.lines().toList().isEmpty()) bw.append(message);
-            else bw.append("\n" + message);
+            else {
+                if (timedmessage.equalsIgnoreCase(chat)) ;
+                else bw.append("\n" + message);
+            }
             bw.close();
+
+            timedmessage = chat;
 
         } catch (IOException e) {
             LOGGER.warn("RPLog konnte nicht in " + log.toString() + " schreiben");

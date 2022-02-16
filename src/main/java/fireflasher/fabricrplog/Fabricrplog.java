@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 public class Fabricrplog implements ModInitializer {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static Logger LOGGER = LogManager.getLogger("FabricRPLog");
 
     @Override
     public void onInitialize() {

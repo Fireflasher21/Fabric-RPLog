@@ -8,6 +8,7 @@
     "Fireflasher"
   ],
   "contact": {},
+  "website": "https://fireshare.ddns.net/s/pBXMWd9meGRTSSy",
   "license": "All-Rights-Reserved",
   "icon": "assets/Fabricrplog/icon.png",
   "environment": "client",
@@ -25,6 +26,6 @@
   "depends": {
     "fabricloader": ">=0.10.7",
     "fabric": "*",
-    "minecraft": "1.17.1"
+    "minecraft": "1.18.1"
   }
 }

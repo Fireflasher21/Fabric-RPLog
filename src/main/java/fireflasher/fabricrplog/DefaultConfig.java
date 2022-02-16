@@ -15,7 +15,7 @@ public class DefaultConfig {
     private final List<String> Keywords = new ArrayList<>();
     private final String ModsDir = FabricrplogClient.getModsFolder();
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger("FabricRPLog Config");
 
 
     public void reloadConfig() {
