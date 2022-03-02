@@ -20,9 +20,6 @@
     ],
     "main": [
       "fireflasher.fabricrplog.Fabricrplog"
-    ],
-    "modmenu": [
-      "fireflasher.fabricrplog.config.ModmenuHandler"
     ]
   },
   "mixins": [

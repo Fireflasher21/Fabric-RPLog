@@ -89,19 +89,5 @@ public class DefaultConfig {
             saveConfig();
         }
     }
-
-    protected void openConfigFile() {Util.getOperatingSystem().open(ConfigFile);}
-
-    private void Userchanges(List<String> keywordstemp){
-        int sizetemp = keywordstemp.size();
-        int size = Keywords.size();
-        if(size != sizetemp){
-            Keywords.clear();
-            Keywords = keywordstemp;
-        }
-        for (String keywords: keywordstemp){
-            keywords.equalsIgnoreCase(Keywords.get(1));
-        }
-    }
 }
 
