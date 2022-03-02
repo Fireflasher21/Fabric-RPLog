@@ -7,8 +7,10 @@
   "authors": [
     "Fireflasher"
   ],
-  "contact": {},
-  "website": "https://fireshare.ddns.net/s/pBXMWd9meGRTSSy",
+  "contact": {
+    "homepage": "https://fireshare.ddns.net/s/pBXMWd9meGRTSSy",
+    "issues": "https://github.com/Fireflasher21/Issues/issues"
+  },
   "license": "All-Rights-Reserved",
   "icon": "assets/Fabricrplog/icon.png",
   "environment": "client",
@@ -18,6 +20,9 @@
     ],
     "main": [
       "fireflasher.fabricrplog.Fabricrplog"
+    ],
+    "modmenu": [
+      "fireflasher.fabricrplog.config.ModmenuHandler"
     ]
   },
   "mixins": [
@@ -27,5 +32,12 @@
     "fabricloader": ">=0.10.7",
     "fabric": "*",
     "minecraft": "1.18.1"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "Latest": "https://bit.ly/3HEVfod"
+      }
+    }
   }
 }
