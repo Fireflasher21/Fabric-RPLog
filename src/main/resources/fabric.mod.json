@@ -3,7 +3,7 @@
   "id": "fabricrplog",
   "version": "${version}",
   "name": "Fabric-RPLog",
-  "description": "Fabric RPLog für Aegorin",
+  "description": "Fabric RPLog für Aegorin\n!!!Restart Game after editing Config!!!",
   "authors": [
     "Fireflasher"
   ],
@@ -20,6 +20,9 @@
     ],
     "main": [
       "fireflasher.fabricrplog.Fabricrplog"
+    ],
+    "modmenu": [
+      "fireflasher.fabricrplog.config.ModmenuHandler"
     ]
   },
   "mixins": [
