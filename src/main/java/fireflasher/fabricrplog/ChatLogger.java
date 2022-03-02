@@ -23,11 +23,13 @@ public class ChatLogger {
 
     public static void chatFilter(String chat){
 
-        /* TODO: Debug
+        // TODO: Debug
+        /*
         for(String debug: Channellist){
             LOGGER.info(debug + " chatFilter");
         }
-        */
+         */
+
         for(String Channel:Channellist){
             if(chat.contains(Channel)){
                 addMessage(chat);
