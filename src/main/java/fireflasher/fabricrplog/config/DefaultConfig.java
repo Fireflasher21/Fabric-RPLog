@@ -2,11 +2,13 @@ package fireflasher.fabricrplog.config;
 
 import fireflasher.fabricrplog.client.FabricrplogClient;
 import net.minecraft.util.Util;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.system.CallbackI;
 
 import java.io.*;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,6 +18,7 @@ public class DefaultConfig {
     private File ConfigFile;
     private List<String> Keywords = new ArrayList<>();
     private final String ModsDir = FabricrplogClient.getModsFolder();
+    private static final String info = "#Füge hier die Schlüsselwörter für den Filter pro Zeile ein";
 
     private static final Logger LOGGER = LogManager.getLogger("FabricRPLog Config");
 
@@ -29,25 +32,37 @@ public class DefaultConfig {
                 e.printStackTrace();
             }
         }
-
+        Keywords.clear();
         try {
             Scanner sc = new Scanner(ConfigFile);
 
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-                Keywords.add(line);
+                if( !line.startsWith("#")){
+                    Keywords.add(line);
+                }
+
             }
-        } catch (FileNotFoundException e) {
+
+            if (Keywords.isEmpty()) {
+                Keywords.add("[Flüstern]");
+                Keywords.add("[Leise]");
+                Keywords.add("[Reden]");
+                Keywords.add("[Rufen]");
+                Keywords.add("[PRufen]");
+                Keywords.add("[Schreien]");
+            }
+
+            BufferedReader br = new BufferedReader(new FileReader(ConfigFile));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ConfigFile, true));
+            if (br.lines().toList().isEmpty()) bw.append(info).close();
+
+        } catch (FileNotFoundException e)  {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        if (Keywords.isEmpty()) {
-            Keywords.add("[Flüstern]");
-            Keywords.add("[Leise]");
-            Keywords.add("[Reden]");
-            Keywords.add("[Rufen]");
-            Keywords.add("[PRufen]");
-            Keywords.add("[Schreien]");
-        }
+
     }
 
     public List<String> getList() {
@@ -62,15 +77,15 @@ public class DefaultConfig {
             return;
         }
         try {
-            for (String write : this.Keywords) {
-                BufferedWriter bw = new BufferedWriter(new FileWriter(ConfigFile, true));
-                BufferedReader br = new BufferedReader(new FileReader(ConfigFile));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ConfigFile, true));
+            BufferedReader br = new BufferedReader(new FileReader(ConfigFile));
+            br.read();
 
-                br.read();
-                if (br.lines().toList().isEmpty()) bw.append(write);
-                else bw.append("\n" + write);
-                bw.close();
+            if (br.lines().toList().isEmpty()) bw.append(info);
+            for (String write : this.Keywords) {
+                bw.append("\n" + write);
             }
+            bw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,16 +107,5 @@ public class DefaultConfig {
 
     protected void openConfigFile() {Util.getOperatingSystem().open(ConfigFile);}
 
-    private void Userchanges(List<String> keywordstemp){
-        int sizetemp = keywordstemp.size();
-        int size = Keywords.size();
-        if(size != sizetemp){
-            Keywords.clear();
-            Keywords = keywordstemp;
-        }
-        for (String keywords: keywordstemp){
-            keywords.equalsIgnoreCase(Keywords.get(1));
-        }
-    }
 }
 
