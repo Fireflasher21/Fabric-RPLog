@@ -22,7 +22,7 @@
       "fireflasher.fabricrplog.Fabricrplog"
     ],
     "modmenu": [
-      "fireflasher.fabricrplog.config.ModmenuHandler"
+      "fireflasher.fabricrplog.config.modmenu.ModmenuHandler"
     ]
   },
   "mixins": [
