@@ -7,8 +7,9 @@ import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
-
+import org.checkerframework.checker.units.qual.C;
 
 public class Optionsscreen extends GameOptionsScreen {
 
@@ -47,17 +48,17 @@ public class Optionsscreen extends GameOptionsScreen {
             }
         };
         this.done = new ClickableWidget(openfile.getZOffset() + 250, 30, openfile.getWidth(), 20, Text.of("Done")) {
-            @Override
-            public void appendNarrations(NarrationMessageBuilder builder) {
-                return;
-            }
+                @Override
+                public void appendNarrations(NarrationMessageBuilder builder) {
+                    return;
+                }
 
-            @Override
-            public void onClick(double mouseX, double mouseY) {
-                onClose();
-                FabricrplogClient.CONFIG.reloadConfig();
-            }
-        };
+                @Override
+                public void onClick(double mouseX, double mouseY) {
+                    onClose();
+                    FabricrplogClient.CONFIG.reloadConfig();
+                }
+            };
 
         this.addDrawableChild(openfile);
         //this.addDrawableChild(savefile);
