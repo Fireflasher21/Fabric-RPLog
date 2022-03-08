@@ -44,7 +44,7 @@ public class Optionsscreen extends GameOptionsScreen {
 
                 @Override
                 public void onClick(double mouseX, double mouseY) {
-                    MinecraftClient.getInstance().setScreenAndRender(new Serverscreen(MinecraftClient.getInstance().currentScreen, server));
+                    MinecraftClient.getInstance().setScreen(new Serverscreen(MinecraftClient.getInstance().currentScreen, server));
                 }
             };
 
@@ -57,7 +57,7 @@ public class Optionsscreen extends GameOptionsScreen {
 
                 @Override
                 public void onClick(double mouseX, double mouseY) {
-                    MinecraftClient.getInstance().setScreenAndRender(new Verification(MinecraftClient.getInstance().currentScreen, defaultConfig, server));
+                    MinecraftClient.getInstance().setScreen(new Verification(MinecraftClient.getInstance().currentScreen, defaultConfig, server));
                 }
             };
 
@@ -83,7 +83,7 @@ public class Optionsscreen extends GameOptionsScreen {
                     String servername = address.toString().split("/")[0];
                     ip = ip.split(":")[0];
                     defaultConfig.addServerToList(ip, servername);
-                    MinecraftClient.getInstance().setScreenAndRender(new Optionsscreen(previous));
+                    MinecraftClient.getInstance().setScreen(new Optionsscreen(previous));
                 }
             }
         };
@@ -111,7 +111,7 @@ public class Optionsscreen extends GameOptionsScreen {
             @Override
             public void onClick(double mouseX, double mouseY) {
                 ServerConfig defaults = new ServerConfig("Defaults",List.of("Defaults"),FabricrplogClient.CONFIG.getKeywords());
-                MinecraftClient.getInstance().setScreenAndRender(new Serverscreen(MinecraftClient.getInstance().currentScreen, defaults));
+                MinecraftClient.getInstance().setScreen(new Serverscreen(MinecraftClient.getInstance().currentScreen, defaults));
             }
         };
 
@@ -160,7 +160,7 @@ public class Optionsscreen extends GameOptionsScreen {
                 @Override
                 public void onClick(double mouseX, double mouseY) {
                     defaultConfig.removeServerFromList(serverConfig);
-                    MinecraftClient.getInstance().setScreenAndRender(new Optionsscreen(previous));
+                    MinecraftClient.getInstance().setScreen(new Optionsscreen(previous));
                 }
             };
 

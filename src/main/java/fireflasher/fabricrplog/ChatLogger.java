@@ -5,7 +5,6 @@ import fireflasher.fabricrplog.config.DefaultConfig;
 import fireflasher.fabricrplog.config.json.ServerConfig;
 import net.minecraft.client.MinecraftClient;
 import org.apache.logging.log4j.Logger;
-import org.checkerframework.common.value.qual.MatchesRegex;
 
 import java.io.*;
 import java.lang.reflect.Array;
