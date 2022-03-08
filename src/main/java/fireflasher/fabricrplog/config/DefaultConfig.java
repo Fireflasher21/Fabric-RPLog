@@ -1,111 +1,152 @@
 package fireflasher.fabricrplog.config;
 
+import com.google.gson.Gson;
 import fireflasher.fabricrplog.client.FabricrplogClient;
+import fireflasher.fabricrplog.config.json.JsonConfig;
+import fireflasher.fabricrplog.config.json.ServerConfig;
 import net.minecraft.util.Util;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.system.CallbackI;
 
 import java.io.*;
-import java.security.Key;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class DefaultConfig {
 
     private File ConfigFile;
+    private static final Gson GSON = new Gson();
+    private static final String ModsDir = FabricrplogClient.getModsFolder();
     private List<String> Keywords = new ArrayList<>();
-    private final String ModsDir = FabricrplogClient.getModsFolder();
-    private static final String info = "#Füge hier die Schlüsselwörter für den Filter pro Zeile ein";
+    public static final List<String> defaultKeywords = Arrays.asList("[Flüstern]","[Leise]","[Reden]","[Rufen]","[PRufen]","[Schreien]");
 
-    private static final Logger LOGGER = LogManager.getLogger("FabricRPLog Config");
+    public List<ServerConfig> serverList = new ArrayList<>();
+    private static final Logger LOGGER = LogManager.getLogger("FabricRPLog DefaultConfig");
 
+    public void setup() {
+        this.ConfigFile = new File(ModsDir + "rplog.json");
+        if (ConfigFile.exists()) {
+            LOGGER.info("Config erfolgreich geladen");
+            loadConfig();
+        } else {
+            setConfigFile();
+            loadConfig();
+        }
+    }
 
-    public void reloadConfig() {
+    private void setConfigFile(){
         if (this.ConfigFile == null || !this.ConfigFile.exists()) {
-            this.ConfigFile = new File(ModsDir, "config.yml");
+            this.ConfigFile = new File(ModsDir, "rplog.json");
             try {
                 ConfigFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        Keywords.clear();
+        JsonConfig channellistconfig = new JsonConfig(defaultKeywords);
         try {
-            Scanner sc = new Scanner(ConfigFile);
-
-            while (sc.hasNextLine()) {
-                String line = sc.nextLine();
-                if( !line.startsWith("#")){
-                    Keywords.add(line);
-                }
-
-            }
-
-            if (Keywords.isEmpty()) {
-                Keywords.add("[Flüstern]");
-                Keywords.add("[Leise]");
-                Keywords.add("[Reden]");
-                Keywords.add("[Rufen]");
-                Keywords.add("[PRufen]");
-                Keywords.add("[Schreien]");
-            }
-
-            BufferedReader br = new BufferedReader(new FileReader(ConfigFile));
-            BufferedWriter bw = new BufferedWriter(new FileWriter(ConfigFile, true));
-            if (br.lines().toList().isEmpty()) bw.append(info).close();
-
-        } catch (FileNotFoundException e)  {
-            e.printStackTrace();
+            PrintWriter pw = new PrintWriter(new FileWriter(ConfigFile, false));
+            String json = GSON.toJson(channellistconfig);
+            pw.write(json);
+            pw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-    public List<String> getList() {
-        if (Keywords.isEmpty()) {
-            reloadConfig();
+    public void loadConfig(){
+        if (this.ConfigFile == null || !this.ConfigFile.exists())setConfigFile();
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(ConfigFile));
+            String collect = br.lines().collect(Collectors.joining(""));
+            if(collect.isEmpty()){
+                setConfigFile();
+                collect = br.lines().collect(Collectors.joining(""));
+            }
+            JsonConfig jsonConfig = GSON.fromJson(collect, JsonConfig.class);
+
+
+            Keywords = jsonConfig.getDefaultKeywords();
+            serverList = jsonConfig.getServerList();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        return this.Keywords;
     }
 
     public void saveConfig() {
         if (this.ConfigFile == null) {
             return;
         }
+        JsonConfig jsonConfig = new JsonConfig(Keywords, serverList);
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(ConfigFile, true));
-            BufferedReader br = new BufferedReader(new FileReader(ConfigFile));
-            br.read();
-
-            if (br.lines().toList().isEmpty()) bw.append(info);
-            for (String write : this.Keywords) {
-                bw.append("\n" + write);
-            }
-            bw.close();
+            PrintWriter pw = new PrintWriter(new FileWriter(ConfigFile, false));
+            String json = GSON.toJson(jsonConfig);
+            pw.write(json);
+            pw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
+    public List<ServerConfig> getList() {
+        if (serverList.isEmpty()) {
+            loadConfig();
+        }
+        return this.serverList;
+    }
 
-    public void setup() {
-        new File(ModsDir).mkdir();
-        this.ConfigFile = new File(ModsDir + "config.yml");
-        if (ConfigFile.exists()) {
-            LOGGER.info("[RPLog] Config erfolgreich geladen");
-            reloadConfig();
-        } else {
-            reloadConfig();
+    public List<String> getKeywords() {
+        return Keywords;
+    }
+
+    public void addServerToList(String serverIp, String serverName) {
+        boolean save = false;
+        int i = 0;
+
+        for (ServerConfig serverListe : serverList) {
+            if (!serverListe.getServerIp().equals(serverIp)) {
+                i++;
+                continue;
+            }
+            //Falls Server als Ip bereits in der Liste, überprüf die Liste der Servernamen
+            ServerConfig.ServerDetails temp_serverdetails = serverListe.getServerDetails();
+            if (!temp_serverdetails.getServerNames().contains(serverName)) {
+                this.serverList.remove(serverListe);
+                temp_serverdetails.getServerNames().add(serverName);
+                serverListe.setServerDetails(temp_serverdetails);
+                this.serverList.add(serverListe);
+                save = true;
+            }
+        }
+        if(i == serverList.size()) {
+            ServerConfig server = new ServerConfig(serverIp, List.of(serverName), defaultKeywords);
+            serverList.add(server);
+            saveConfig();
+            return;
+        }
+        if(save){
             saveConfig();
         }
     }
 
-    protected void openConfigFile() {Util.getOperatingSystem().open(ConfigFile);}
+    public void removeServerFromList(ServerConfig serverConfig){
+        getList().remove(serverConfig);
+        saveConfig();
+    }
+
+    public ServerConfig getServerObject(String serverIp) {
+        for (ServerConfig server : serverList) {
+            if (!server.getServerIp().equals(serverIp)) {
+                continue;
+            }
+            return server;
+        }
+        return null;
+    }
 
 }
 

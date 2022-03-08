@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 public class FabricrplogClient implements ClientModInitializer {
 
     public static DefaultConfig CONFIG = new DefaultConfig();
-    public static ChatLogger CHATLOGGER;
+    public static ChatLogger CHATLOGGER = new ChatLogger();
     public static Logger LOGGER = Fabricrplog.LOGGER;
 
     @Override
@@ -24,7 +24,6 @@ public class FabricrplogClient implements ClientModInitializer {
 
 
         CONFIG.setup();
-        CHATLOGGER = new ChatLogger();
         CHATLOGGER.setup();
 
         chatregister();
@@ -55,7 +54,7 @@ public class FabricrplogClient implements ClientModInitializer {
     }
 
     public static String getFolder(){ return FabricLoader.getInstance().getGameDir().toString();}
-    public static String getModsFolder(){ return FabricLoader.getInstance().getConfigDir().toString() + "/RPLog/";}
+    public static String getModsFolder(){ return FabricLoader.getInstance().getConfigDir().toString() + "/";}
 
 
 
