@@ -14,14 +14,14 @@ import net.minecraft.text.Text;
 
 import java.util.List;
 
-public class Optionsscreen extends GameOptionsScreen {
+public class Optionsscreen extends Screen {
 
     private Screen previous;
     static final int CLICKABLEWIDGETHEIGHT = 20;
     private final ServerConfig dummy = new ServerConfig("dummy", List.of("dummy"), List.of("dummy"));
 
     Optionsscreen(Screen previous) {
-        super(previous, MinecraftClient.getInstance().options, Text.of("RPlog Options"));
+        super(Text.of("RPlog Options"));
         this.previous = previous;
     }
 
