@@ -6,21 +6,20 @@ import fireflasher.fabricrplog.config.DefaultConfig;
 import fireflasher.fabricrplog.config.json.ServerConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import java.util.List;
 
-public class Optionsscreen extends GameOptionsScreen {
+public class Optionsscreen extends Screen {
 
     private Screen previous;
     static final int CLICKABLEWIDGETHEIGHT = 20;
     private final ServerConfig dummy = new ServerConfig("dummy", List.of("dummy"), List.of("dummy"));
 
     Optionsscreen(Screen previous) {
-        super(previous, MinecraftClient.getInstance().options, Text.of("RPlog Options"));
+        super(Text.of("RPlog Options"));
         this.previous = previous;
     }
 
