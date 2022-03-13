@@ -7,13 +7,10 @@ import net.minecraft.client.MinecraftClient;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -122,7 +119,7 @@ public class ChatLogger {
     }
 
     private static void addMessage(String chat){
-        String Path = FabricrplogClient.getFolder() + "/RPLogs" + "/" + serverName;
+        String Path = FabricrplogClient.getFolder() + "/RPLogs/" + serverName;
         if(!log.toString().contains(LocalDateTime.now().format(DATE)) || !log.getPath().equalsIgnoreCase(Path)) {
             LocalDateTime today = LocalDateTime.now();
             String date = today.format(DATE);
