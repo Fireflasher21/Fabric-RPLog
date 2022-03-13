@@ -4,7 +4,7 @@ It saves it logs in sorted Folders per Server and you can add custom Keyword Lis
 If none Custom Server List is given, the Mod uses the Default List which can also be edited independtly
 At the Moment it can only be Configured with Modmenu from Terraformers: https://github.com/TerraformersMC/ModMenu
 
-Ah Forge equivalent exists too, check out here: https://github.com/Fireflasher21/Forge-RPLog
+A Forge equivalent exists too, check out here: https://github.com/Fireflasher21/Forge-RPLog
 
 If you experience any Crashes or Bugs open an Issue. Im also always happy to improve the mod, so send me ideas of what you think would be neat to add.
 
