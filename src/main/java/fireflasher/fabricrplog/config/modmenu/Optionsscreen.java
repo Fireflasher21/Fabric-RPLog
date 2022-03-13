@@ -7,21 +7,20 @@ import fireflasher.fabricrplog.config.json.ServerConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
-import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import java.util.List;
 
-public class Optionsscreen extends GameOptionsScreen {
+public class Optionsscreen extends Screen {
 
     private Screen previous;
     static final int CLICKABLEWIDGETHEIGHT = 20;
     private final ServerConfig dummy = new ServerConfig("dummy", List.of("dummy"), List.of("dummy"));
 
     Optionsscreen(Screen previous) {
-        super(previous, MinecraftClient.getInstance().options, Text.of("RPlog Options"));
+        super(Text.of("RPlog Options"));
         this.previous = previous;
     }
 
@@ -44,7 +43,7 @@ public class Optionsscreen extends GameOptionsScreen {
 
                 @Override
                 public void onClick(double mouseX, double mouseY) {
-                    MinecraftClient.getInstance().setScreenAndRender(new Serverscreen(MinecraftClient.getInstance().currentScreen, server));
+                    MinecraftClient.getInstance().setScreen(new Serverscreen(MinecraftClient.getInstance().currentScreen, server));
                 }
             };
 
@@ -57,7 +56,7 @@ public class Optionsscreen extends GameOptionsScreen {
 
                 @Override
                 public void onClick(double mouseX, double mouseY) {
-                    MinecraftClient.getInstance().setScreenAndRender(new Verification(MinecraftClient.getInstance().currentScreen, defaultConfig, server));
+                    MinecraftClient.getInstance().setScreen(new Verification(MinecraftClient.getInstance().currentScreen, defaultConfig, server));
                 }
             };
 
@@ -83,7 +82,7 @@ public class Optionsscreen extends GameOptionsScreen {
                     String servername = address.toString().split("/")[0];
                     ip = ip.split(":")[0];
                     defaultConfig.addServerToList(ip, servername);
-                    MinecraftClient.getInstance().setScreenAndRender(new Optionsscreen(previous));
+                    MinecraftClient.getInstance().setScreen(new Optionsscreen(previous));
                 }
             }
         };
@@ -111,7 +110,7 @@ public class Optionsscreen extends GameOptionsScreen {
             @Override
             public void onClick(double mouseX, double mouseY) {
                 ServerConfig defaults = new ServerConfig("Defaults",List.of("Defaults"),FabricrplogClient.CONFIG.getKeywords());
-                MinecraftClient.getInstance().setScreenAndRender(new Serverscreen(MinecraftClient.getInstance().currentScreen, defaults));
+                MinecraftClient.getInstance().setScreen(new Serverscreen(MinecraftClient.getInstance().currentScreen, defaults));
             }
         };
 
@@ -160,7 +159,8 @@ public class Optionsscreen extends GameOptionsScreen {
                 @Override
                 public void onClick(double mouseX, double mouseY) {
                     defaultConfig.removeServerFromList(serverConfig);
-                    MinecraftClient.getInstance().setScreenAndRender(new Optionsscreen(previous));
+                    Optionsscreen.super.onClose();
+                    MinecraftClient.getInstance().setScreen(new Optionsscreen(previous));
                 }
             };
 

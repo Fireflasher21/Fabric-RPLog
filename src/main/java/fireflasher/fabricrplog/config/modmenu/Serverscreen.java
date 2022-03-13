@@ -44,7 +44,7 @@ class Serverscreen extends Screen {
             public void onClick(double mouseX, double mouseY) {
                 serverConfig.getServerDetails().getServerKeywords().clear();
                 serverConfig.getServerDetails().getServerKeywords().addAll(DefaultConfig.defaultKeywords);
-                MinecraftClient.getInstance().setScreenAndRender(new Serverscreen(previous, serverConfig));
+                MinecraftClient.getInstance().setScreen(new Serverscreen(previous, serverConfig));
             }
         };
 
@@ -73,7 +73,7 @@ class Serverscreen extends Screen {
                 public void onClick(double mouseX, double mouseY) {
                     keywords.remove(keyword);
                     serverConfig.setServerDetails(serverDetails);
-                    MinecraftClient.getInstance().setScreenAndRender(new Serverscreen(previous, serverConfig));
+                    MinecraftClient.getInstance().setScreen(new Serverscreen(previous, serverConfig));
                 }
             };
 
@@ -102,7 +102,7 @@ class Serverscreen extends Screen {
                 if (!insert.getText().isEmpty()) {
                     keywords.add(insert.getText());
                     serverConfig.setServerDetails(serverDetails);
-                    MinecraftClient.getInstance().setScreenAndRender(new Serverscreen(previous, serverConfig));
+                    MinecraftClient.getInstance().setScreen(new Serverscreen(previous, serverConfig));
                 }
 
             }
