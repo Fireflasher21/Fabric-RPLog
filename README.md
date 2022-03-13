@@ -11,4 +11,4 @@ If you experience any Crashes or Bugs open an Issue. Im also always happy to imp
 
 History:
 This Mod was written by me to help specifically Roleplayers, which often access the logs of their RP History if their Server is text based. 
-In my Case it was Aegorin and all the people who make this Server what it is. To help them and to increase the fun and Quality of the Roleplay i started this Mod 
+In my Case it was Aegorin.deand all the people who make this Server what it is. To help them and to increase the fun and Quality of the Roleplay i started this Mod 
