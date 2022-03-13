@@ -3,13 +3,13 @@
   "id": "fabricrplog",
   "version": "${version}",
   "name": "Fabric-RPLog",
-  "description": "Fabric RPLog für Aegorin\n!!!Restart Game after editing Config!!!",
+  "description": "Generel RPLog made for Aegorin",
   "authors": [
     "Fireflasher"
   ],
   "contact": {
-    "homepage": "https://fireshare.ddns.net/s/pBXMWd9meGRTSSy",
-    "issues": "https://github.com/Fireflasher21/Issues/issues"
+    "homepage": "https://github.com/Fireflasher21/Fabric-RPLog",
+    "issues": "https://github.com/Fireflasher21/Fabric-RPLog/issues"
   },
   "license": "All-Rights-Reserved",
   "icon": "assets/Fabricrplog/icon.png",
@@ -22,7 +22,7 @@
       "fireflasher.fabricrplog.Fabricrplog"
     ],
     "modmenu": [
-      "fireflasher.fabricrplog.config.ModmenuHandler"
+      "fireflasher.fabricrplog.config.modmenu.ModmenuHandler"
     ]
   },
   "mixins": [
@@ -36,7 +36,7 @@
   "custom": {
     "modmenu": {
       "links": {
-        "Latest": "https://bit.ly/3HEVfod"
+        "Latest": "https://github.com/Fireflasher21/Fabric-RPLog/releases"
       }
     }
   }

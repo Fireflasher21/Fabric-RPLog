@@ -1,16 +1,14 @@
-package fireflasher.fabricrplog.config;
+package fireflasher.fabricrplog.config.modmenu;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import fireflasher.fabricrplog.client.FabricrplogClient;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
 
 public class ModmenuHandler implements ModMenuApi {
 
 
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
+        /*
         return screen -> new Screen(Text.of("")) {
             @Override
             protected void init() {
@@ -18,5 +16,8 @@ public class ModmenuHandler implements ModMenuApi {
                 client.openScreen(screen);
             }
         };
+
+         */
+        return Optionsscreen::new;
     }
 }

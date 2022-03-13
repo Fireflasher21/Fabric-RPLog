@@ -54,8 +54,8 @@ public class FabricrplogClient implements ClientModInitializer {
         });
     }
 
-    public static String getFolder(){ return FabricLoader.getInstance().getGameDir().toString();}
-    public static String getModsFolder(){ return FabricLoader.getInstance().getConfigDir().toString() + "/RPLog/";}
+    public static String getFolder(){ return FabricLoader.getInstance().getGameDir().toString() + "/RPLogs/";}
+    public static String getModsFolder(){ return FabricLoader.getInstance().getConfigDir().toString() + "/";}
 
 
 
