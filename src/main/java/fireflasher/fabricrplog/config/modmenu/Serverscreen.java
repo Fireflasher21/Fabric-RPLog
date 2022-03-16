@@ -11,6 +11,7 @@ import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 
 import java.util.List;
 
@@ -28,13 +29,19 @@ class Serverscreen extends Screen {
     }
 
     @Override
+    public void resize(MinecraftClient client, int width, int height) {
+        this.init(client, width, height);
+    }
+
+    @Override
     protected void init() {
+
 
         ServerConfig.ServerDetails serverDetails = serverConfig.getServerDetails();
         List<String> keywords = serverDetails.getServerKeywords();
-        int i = 30;
 
-        ClickableWidget reset = new ClickableWidget(this.width / 2 - this.width / 4 - 50, i, 100, CLICKABLEWIDGETHEIGHT, Text.of("Reset Defaults")) {
+        int i = 30;
+        ClickableWidget reset = new ClickableWidget(this.width / 2 - this.width / 4 - 50, i, 100, CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.serverscreen.reset_defaults")) {
             @Override
             public void appendNarrations(NarrationMessageBuilder builder) {
                 return;
@@ -48,7 +55,7 @@ class Serverscreen extends Screen {
             }
         };
 
-        ClickableWidget done = new ClickableWidget(this.width / 2 + this.width / 4 - reset.getWidth() / 2 , i, reset.getWidth(), CLICKABLEWIDGETHEIGHT, Text.of("Done")) {
+        ClickableWidget done = new ClickableWidget(this.width / 2 + this.width / 4 - reset.getWidth() / 2 , i, reset.getWidth(), CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.screen.done")) {
             @Override
             public void appendNarrations(NarrationMessageBuilder builder) {
                 return;
@@ -63,7 +70,7 @@ class Serverscreen extends Screen {
 
         for (String keyword : keywords) {
             i = i + 30;
-            ClickableWidget delete = new ClickableWidget(this.width / 2 + this.width / 4 - reset.getWidth() / 2, i, reset.getWidth(), CLICKABLEWIDGETHEIGHT, Text.of("Löschen")) {
+            ClickableWidget delete = new ClickableWidget(this.width / 2 + this.width / 4 - reset.getWidth() / 2, i, reset.getWidth(), CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.screen.delete")) {
                 @Override
                 public void appendNarrations(NarrationMessageBuilder builder) {
                     return;
@@ -90,7 +97,7 @@ class Serverscreen extends Screen {
 
         };
 
-        ClickableWidget add = new ClickableWidget(this.width / 2 + this.width / 4 - insert.getWidth() / 2, i, insert.getWidth(), CLICKABLEWIDGETHEIGHT, Text.of("Add")) {
+        ClickableWidget add = new ClickableWidget(this.width / 2 + this.width / 4 - insert.getWidth() / 2, i, insert.getWidth(), CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.serverscreen.add_Keywords")) {
             @Override
             public void appendNarrations(NarrationMessageBuilder builder) {
                 return;
