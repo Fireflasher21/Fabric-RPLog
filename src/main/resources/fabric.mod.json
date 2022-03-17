@@ -12,7 +12,7 @@
     "issues": "https://github.com/Fireflasher21/Fabric-RPLog/issues"
   },
   "license": "All-Rights-Reserved",
-  "icon": "assets/Fabricrplog/icon.png",
+  "icon": "assets/fabricrplog/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
