@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import fireflasher.fabricrplog.client.FabricrplogClient;
 import fireflasher.fabricrplog.config.json.JsonConfig;
 import fireflasher.fabricrplog.config.json.ServerConfig;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +14,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class DefaultConfig {
@@ -28,7 +31,8 @@ public class DefaultConfig {
     public void setup() {
         this.ConfigFile = new File(ModsDir + "rplog.json");
         if (ConfigFile.exists()) {
-            LOGGER.info("Config erfolgreich geladen");
+            Text logger_info = new TranslatableText("rplog.logger.config");
+            LOGGER.info("Config successfully loaded");
             loadConfig();
         } else {
             setConfigFile();
@@ -116,7 +120,9 @@ public class DefaultConfig {
             ServerConfig.ServerDetails temp_serverdetails = serverListe.getServerDetails();
             if (!temp_serverdetails.getServerNames().contains(serverName)) {
                 this.serverList.remove(serverListe);
-                temp_serverdetails.getServerNames().add(serverName);
+                Pattern serverAddress = Pattern.compile("[A-z]{1,}");
+                if(serverAddress.matcher(serverName).find()) temp_serverdetails.getServerNames().add(0,serverName);
+                else temp_serverdetails.getServerNames().add(serverName);
                 serverListe.setServerDetails(temp_serverdetails);
                 this.serverList.add(serverListe);
                 save = true;
