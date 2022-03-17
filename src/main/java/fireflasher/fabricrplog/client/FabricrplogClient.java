@@ -30,6 +30,7 @@ public class FabricrplogClient implements ClientModInitializer {
 
     }
 
+
     private void chatregister(){
         ClientLifecycleEvents.CLIENT_STARTED.register(client -> {
 

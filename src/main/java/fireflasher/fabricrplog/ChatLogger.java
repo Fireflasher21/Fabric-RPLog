@@ -3,6 +3,7 @@ package fireflasher.fabricrplog;
 import fireflasher.fabricrplog.client.FabricrplogClient;
 import fireflasher.fabricrplog.config.json.ServerConfig;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import org.apache.logging.log4j.Logger;
 
@@ -68,12 +69,8 @@ public class ChatLogger {
             channellist = CONFIG.getKeywords();
         }
 
-        for(String Channel: channellist){
-            if(!chat.contains(Channel)){
-                continue;
-            }
-            addMessage(chat);
-        }
+        boolean isChannel = channellist.stream().anyMatch(chat::contains);
+        if (isChannel) addMessage(chat);
 
 
 
@@ -120,7 +117,8 @@ public class ChatLogger {
                             if(new File(filename).exists()) fileToZip.delete();
                         }
                         catch (IOException e){
-                            LOGGER.warn(new TranslatableText("rplog.logger.chatlogger.zip_warning").getKey());
+                            Text logger_zipwarning  = new TranslatableText("rplog.logger.chatlogger.zip_warning");
+                            LOGGER.warn("Logfile couldnt be zipped");
                         }
                     }
                 }
@@ -142,7 +140,8 @@ public class ChatLogger {
                     path.mkdir();
                     log.createNewFile();
                 } catch (IOException e) {
-                    LOGGER.warn(new TranslatableText("rplog.logger.chatlogger.creation_warning").getKey() + log.toString());
+                    Text logger_creationwarning = new TranslatableText("rplog.logger.chatlogger.creation_warning");
+                    LOGGER.warn("RPLog File couldnt be created: " + log.toString());
                     error = true;
                 }
             }
@@ -164,7 +163,8 @@ public class ChatLogger {
             timedmessage = chat;
 
         } catch (IOException e) {
-            LOGGER.warn( new TranslatableText("rplog.logger.chatlogger.write_warning").getKey() + log.toString());
+            Text logger_writewarning = new TranslatableText("rplog.logger.chatlogger.write_warning");
+            LOGGER.warn( "RPLog File couldnt be written: " + log.toString());
         }
     }
 

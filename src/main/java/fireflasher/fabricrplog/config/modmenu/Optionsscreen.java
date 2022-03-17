@@ -1,15 +1,12 @@
 package fireflasher.fabricrplog.config.modmenu;
 
 import fireflasher.fabricrplog.ChatLogger;
-import fireflasher.fabricrplog.Fabricrplog;
 import fireflasher.fabricrplog.client.FabricrplogClient;
 import fireflasher.fabricrplog.config.DefaultConfig;
 import fireflasher.fabricrplog.config.json.ServerConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.EntryListWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -35,54 +32,35 @@ public class Optionsscreen extends Screen {
 
 
     protected void init() {
-        int i = 50;
+        int i = 30;
         DefaultConfig defaultConfig = FabricrplogClient.CONFIG;
         List<ServerConfig> serverConfigList = defaultConfig.getList();
         if (serverConfigList.isEmpty()) {
             serverConfigList.add(dummy);
         }
         for (ServerConfig server : serverConfigList) {
-            i = i + 30;
-            ClickableWidget button = new ClickableWidget(this.width / 2 - this.width / 4 - 50, i, 100, CLICKABLEWIDGETHEIGHT, Text.of(ChatLogger.getServerNameShortener(server.getServerDetails().getServerNames()))) {
-                @Override
-                public void appendNarrations(NarrationMessageBuilder builder) {
-                    return;
-                }
-
-                @Override
-                public void onClick(double mouseX, double mouseY) {
+            i = i + 25;
+            ButtonWidget serverNameButton = new ButtonWidget(this.width / 2 - this.width / 4 - 50, i, 100, CLICKABLEWIDGETHEIGHT, Text.of(ChatLogger.getServerNameShortener(server.getServerDetails().getServerNames())),
+            button ->{
                     MinecraftClient.getInstance().setScreen(new Serverscreen(MinecraftClient.getInstance().currentScreen, server));
-                }
-            };
+                });
 
 
-            ClickableWidget delete = new ClickableWidget(this.width / 2 + this.width / 4 - button.getWidth() / 2, i, button.getWidth(), CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.screen.delete")) {
-                @Override
-                public void appendNarrations(NarrationMessageBuilder builder) {
-                    return;
-                }
 
-                @Override
-                public void onClick(double mouseX, double mouseY) {
+            ButtonWidget delete = new ButtonWidget(this.width / 2 + this.width / 4 - serverNameButton.getWidth() / 2, i, serverNameButton.getWidth(), CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.screen.delete"),
+                    button -> {
                     MinecraftClient.getInstance().setScreen(new Verification(MinecraftClient.getInstance().currentScreen, defaultConfig, server));
-                }
-            };
+                });
 
             if (!serverConfigList.contains(dummy)) {
-                this.addDrawableChild(button);
+                this.addDrawableChild(serverNameButton);
                 this.addDrawableChild(delete);
             }
         }
         serverConfigList.remove(dummy);
 
-        ClickableWidget addServer = new ClickableWidget(this.width / 2 - this.width / 4 - 50, 30, 100, CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.optionscreen.add_Server")) {
-            @Override
-            public void appendNarrations(NarrationMessageBuilder builder) {
-                return;
-            }
-
-            @Override
-            public void onClick(double mouseX, double mouseY) {
+        ButtonWidget addServer = new ButtonWidget(this.width / 2 - this.width / 4 - 50, 13, 100, CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.optionscreen.add_Server"),
+                button -> {
                 if (MinecraftClient.getInstance().getNetworkHandler() == null || MinecraftClient.getInstance().getNetworkHandler().getConnection().isLocal()) {
                 } else {
                     String address = MinecraftClient.getInstance().getNetworkHandler().getConnection().getAddress().toString();
@@ -97,45 +75,30 @@ public class Optionsscreen extends Screen {
                     defaultConfig.loadConfig();
                     MinecraftClient.getInstance().setScreen(new Optionsscreen(previous));
                 }
-            }
-        };
+            });
 
 
-        ClickableWidget done = new ClickableWidget(this.width / 2 + this.width / 4 - addServer.getWidth() / 2, 30, addServer.getWidth(), CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.screen.done")) {
-            @Override
-            public void appendNarrations(NarrationMessageBuilder builder) {
-                return;
-            }
-
-            @Override
-            public void onClick(double mouseX, double mouseY) {
-                onClose();
-                defaultConfig.loadConfig();
-            }
-        };
-
-        ClickableWidget defaultconfigbutton = new ClickableWidget(this.width / 2 + - 30 , 30, 60, CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.screen.defaults")) {
-            @Override
-            public void appendNarrations(NarrationMessageBuilder builder) {
-                return;
-            }
-
-            @Override
-            public void onClick(double mouseX, double mouseY) {
+        ButtonWidget defaultconfigbutton = new ButtonWidget(this.width / 2 + this.width / 4 - 50 , 13, 100, CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.screen.defaults"),
+                button -> {
                 ServerConfig defaults = new ServerConfig("Defaults",List.of("Defaults"),FabricrplogClient.CONFIG.getKeywords());
                 MinecraftClient.getInstance().setScreen(new Serverscreen(MinecraftClient.getInstance().currentScreen, defaults));
-            }
-        };
+            });
+
+
+        ButtonWidget done = new ButtonWidget(this.width / 2 + this.width / 4 - 50, this.height - 30, 100 , CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.screen.done"),
+                button -> {
+                    onClose();
+                    defaultConfig.loadConfig();
+                });
+
+        ButtonWidget openFolder = new ButtonWidget(this.width / 2 - this.width / 4 - 50, this.height - 30, 100 , CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.optionscreen.open_LogFolder"),
+                button ->{
+                    Util.getOperatingSystem().open(new File(FabricrplogClient.getFolder()));
+                });
 
         this.addDrawableChild(defaultconfigbutton);
         this.addDrawableChild(addServer);
         this.addDrawableChild(done);
-
-        ButtonWidget openFolder = new ButtonWidget(this.width / 2, 100 , 60 , CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.optionscreen.open_LogFolder"),
-                button ->{
-                    Util.getOperatingSystem().open(new File(FabricrplogClient.getFolder()));
-        });
-
         this.addDrawableChild(openFolder);
 
     }
@@ -144,15 +107,16 @@ public class Optionsscreen extends Screen {
         TranslatableText serverlist = new TranslatableText("rplog.config.optionscreen.configuration_Servers");
         TranslatableText deleteServer = new TranslatableText("rplog.config.optionscreen.delete_Servers");
         this.renderBackground(matrices);
-        drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 5, 0xffffff);
-        drawCenteredText(matrices, this.textRenderer, serverlist, this.width / 2 - this.width / 4, 60, 0xffffff);
-        drawCenteredText(matrices, this.textRenderer, deleteServer, this.width / 2 + this.width / 4, 60, 0xffffff);
+        drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 18, 0xffffff);
+        drawCenteredText(matrices, this.textRenderer, serverlist, this.width / 2 - this.width / 4, 40, 0xffffff);
+        drawCenteredText(matrices, this.textRenderer, deleteServer, this.width / 2 + this.width / 4, 40, 0xffffff);
         super.render(matrices, mouseX, mouseY, delta);
     }
 
     @Override
-    public boolean shouldCloseOnEsc() {
-        return false;
+    public void onClose(){
+        FabricrplogClient.CONFIG.loadConfig();
+        this.client.setScreen(null);
     }
 
 
@@ -170,32 +134,18 @@ public class Optionsscreen extends Screen {
         }
 
         public void init(){
-            ClickableWidget delete = new ClickableWidget(this.width / 2 - this.width / 4 - 50, this.height / 2, 100, CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.optionscreen.verification.delete")) {
-                @Override
-                public void appendNarrations(NarrationMessageBuilder builder) {
-                    return;
-                }
-
-                @Override
-                public void onClick(double mouseX, double mouseY) {
+            ButtonWidget delete = new ButtonWidget(this.width / 2 - this.width / 4 - 50, this.height / 2, 100, CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.optionscreen.verification.delete"),
+                    button -> {
                     defaultConfig.removeServerFromList(serverConfig);
-                    Optionsscreen.super.onClose();
+                    super.onClose();
                     MinecraftClient.getInstance().setScreen(new Optionsscreen(previous));
-                }
-            };
+                });
 
 
-            ClickableWidget abort = new ClickableWidget(this.width / 2 + this.width / 4 - 50, this.height / 2,100, CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.optionscreen.verification.cancel")) {
-                @Override
-                public void appendNarrations(NarrationMessageBuilder builder) {
-                    return;
-                }
-
-                @Override
-                public void onClick(double mouseX, double mouseY) {
+            ButtonWidget abort = new ButtonWidget(this.width / 2 + this.width / 4 - 50, this.height / 2,100, CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.optionscreen.verification.cancel"),
+                    button -> {
                     onClose();
-                }
-            };
+                });
 
             this.addDrawableChild(delete);
             this.addDrawableChild(abort);

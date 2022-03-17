@@ -13,6 +13,7 @@
 
   "rplog.config.serverscreen.reset_defaults": "Standards zurücksetzen",
   "rplog.config.serverscreen.add_Keywords": "Hinzufügen",
+  "rplog.config.serverscreen.serverAdress":"Server Adresse",
 
   "rplog.logger.config": "Config erfolgreich geladen",
   "rplog.logger.chatlogger.zip_warning": "RPLOG Datei konnte nicht verpackt werden",
