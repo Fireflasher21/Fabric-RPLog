@@ -50,7 +50,7 @@ class Serverscreen extends Screen {
         ButtonWidget done = new ButtonWidget(this.width / 2 + this.width / 4 - reset.getWidth() / 2 , 13, reset.getWidth(), CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.screen.done"),
                 button -> {
                 FabricrplogClient.CONFIG.saveConfig();
-                onClose();
+                close();
             });
 
         for (String keyword : keywords) {
@@ -100,7 +100,7 @@ class Serverscreen extends Screen {
     }
 
     @Override
-    public void onClose(){
+    public void close(){
         this.client.setScreen(previous);
     }
 

@@ -87,7 +87,7 @@ public class Optionsscreen extends Screen {
 
         ButtonWidget done = new ButtonWidget(this.width / 2 + this.width / 4 - 50, this.height - 30, 100 , CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.screen.done"),
                 button -> {
-                    onClose();
+                    close();
                     defaultConfig.loadConfig();
                 });
 
@@ -114,7 +114,7 @@ public class Optionsscreen extends Screen {
     }
 
     @Override
-    public void onClose(){
+    public void close(){
         FabricrplogClient.CONFIG.loadConfig();
         this.client.setScreen(null);
     }
@@ -137,14 +137,14 @@ public class Optionsscreen extends Screen {
             ButtonWidget delete = new ButtonWidget(this.width / 2 - this.width / 4 - 50, this.height / 2, 100, CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.optionscreen.verification.delete"),
                     button -> {
                     defaultConfig.removeServerFromList(serverConfig);
-                    super.onClose();
+                    super.close();
                     MinecraftClient.getInstance().setScreen(new Optionsscreen(previous));
                 });
 
 
             ButtonWidget abort = new ButtonWidget(this.width / 2 + this.width / 4 - 50, this.height / 2,100, CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.optionscreen.verification.cancel"),
                     button -> {
-                    onClose();
+                    close();
                 });
 
             this.addDrawableChild(delete);
@@ -160,7 +160,7 @@ public class Optionsscreen extends Screen {
         }
 
         @Override
-        public void onClose(){
+        public void close(){
             this.client.setScreen(previous);
         }
 
