@@ -16,4 +16,4 @@ In my Case it was Aegorin and all the people who make this Server what it is. To
 If you want to check out the Server here you go: https://Aegorin.de
 But keep in mind, that the Servers only language is German
 
-Downloads: [![Github All Releases](https://img.shields.io/github/downloads/fireflasher21/fabric-rplog/total.svg)]()
+[![Github All Releases](https://img.shields.io/github/downloads/fireflasher21/fabric-rplog/total.svg)]()
