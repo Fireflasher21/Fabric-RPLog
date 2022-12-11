@@ -1,25 +1,27 @@
 package fireflasher.fabricrplog.mixin;
 
 
-import fireflasher.fabricrplog.listener.ChatAccess;
-import net.minecraft.client.gui.ClientChatListener;
-import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.network.MessageType;
-import org.spongepowered.asm.mixin.Final;
+
+import com.mojang.authlib.GameProfile;
+import fireflasher.fabricrplog.ChatLogger;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.network.message.MessageHandler;
+import net.minecraft.network.message.MessageType;
+import net.minecraft.network.message.SignedMessage;
+import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.List;
-import java.util.Map;
+@Mixin(MessageHandler.class)
+public abstract class ChatAccessMixin {
+    protected String content;
 
-@Mixin(InGameHud.class)
-public abstract class ChatAccessMixin implements ChatAccess {
-
-    @Shadow
-    @Final
-    private Map<MessageType, List<ClientChatListener>> listeners;
-
-    public void registerChatListener(MessageType messageType, ClientChatListener listener) {
-        this.listeners.get(messageType).add(listener);
+    @Inject(method = "onChatMessage", at = @At("INVOKE"), cancellable = true)
+    private void onChatMessage(SignedMessage message, GameProfile sender, MessageType.Parameters params, CallbackInfo ci)  {
+        Text textContent = message.getContent();
+        ChatLogger.chatFilter(message.toString());
     }
 }

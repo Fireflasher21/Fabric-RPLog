@@ -10,7 +10,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.EntryListWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.Util;
 
 import java.io.File;
@@ -19,13 +19,13 @@ import java.util.regex.Pattern;
 
 public class Optionsscreen extends Screen {
 
-    private Screen previous;
+    private final Screen previous;
     private EntryListWidget buttonList;
     static final int CLICKABLEWIDGETHEIGHT = 20;
     private final ServerConfig dummy = new ServerConfig("dummy", List.of("dummy"), List.of("dummy"));
 
     Optionsscreen(Screen previous) {
-        super(new TranslatableText("rplog.config.optionscreen.title"));
+        super( Text.translatable("rplog.config.optionscreen.title"));
         this.previous = previous;
     }
 
@@ -47,7 +47,7 @@ public class Optionsscreen extends Screen {
 
 
 
-            ButtonWidget delete = new ButtonWidget(this.width / 2 + this.width / 4 - serverNameButton.getWidth() / 2, i, serverNameButton.getWidth(), CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.screen.delete"),
+            ButtonWidget delete = new ButtonWidget(this.width / 2 + this.width / 4 - serverNameButton.getWidth() / 2, i, serverNameButton.getWidth(), CLICKABLEWIDGETHEIGHT,Text.translatable("rplog.config.screen.delete"),
                     button -> {
                     MinecraftClient.getInstance().setScreen(new Verification(MinecraftClient.getInstance().currentScreen, defaultConfig, server));
                 });
@@ -59,7 +59,7 @@ public class Optionsscreen extends Screen {
         }
         serverConfigList.remove(dummy);
 
-        ButtonWidget addServer = new ButtonWidget(this.width / 2 - this.width / 4 - 50, 13, 100, CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.optionscreen.add_Server"),
+        ButtonWidget addServer = new ButtonWidget(this.width / 2 - this.width / 4 - 50, 13, 100, CLICKABLEWIDGETHEIGHT,(Text) Text.translatable("rplog.config.optionscreen.add_Server"),
                 button -> {
                 if (MinecraftClient.getInstance().getNetworkHandler() == null || MinecraftClient.getInstance().getNetworkHandler().getConnection().isLocal()) {
                 } else {
@@ -78,20 +78,20 @@ public class Optionsscreen extends Screen {
             });
 
 
-        ButtonWidget defaultconfigbutton = new ButtonWidget(this.width / 2 + this.width / 4 - 50 , 13, 100, CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.screen.defaults"),
+        ButtonWidget defaultconfigbutton = new ButtonWidget(this.width / 2 + this.width / 4 - 50 , 13, 100, CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.screen.defaults"),
                 button -> {
                 ServerConfig defaults = new ServerConfig("Defaults",List.of("Defaults"),FabricrplogClient.CONFIG.getKeywords());
                 MinecraftClient.getInstance().setScreen(new Serverscreen(MinecraftClient.getInstance().currentScreen, defaults));
             });
 
 
-        ButtonWidget done = new ButtonWidget(this.width / 2 + this.width / 4 - 50, this.height - 30, 100 , CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.screen.done"),
+        ButtonWidget done = new ButtonWidget(this.width / 2 + this.width / 4 - 50, this.height - 30, 100 , CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.screen.done"),
                 button -> {
-                    onClose();
+                    close();
                     defaultConfig.loadConfig();
                 });
 
-        ButtonWidget openFolder = new ButtonWidget(this.width / 2 - this.width / 4 - 50, this.height - 30, 100 , CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.optionscreen.open_LogFolder"),
+        ButtonWidget openFolder = new ButtonWidget(this.width / 2 - this.width / 4 - 50, this.height - 30, 100 , CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.optionscreen.open_LogFolder"),
                 button ->{
                     Util.getOperatingSystem().open(new File(FabricrplogClient.getFolder()));
                 });
@@ -104,8 +104,8 @@ public class Optionsscreen extends Screen {
     }
 
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        TranslatableText serverlist = new TranslatableText("rplog.config.optionscreen.configuration_Servers");
-        TranslatableText deleteServer = new TranslatableText("rplog.config.optionscreen.delete_Servers");
+        Text serverlist = Text.translatable("rplog.config.optionscreen.configuration_Servers");
+        Text deleteServer = Text.translatable("rplog.config.optionscreen.delete_Servers");
         this.renderBackground(matrices);
         drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 18, 0xffffff);
         drawCenteredText(matrices, this.textRenderer, serverlist, this.width / 2 - this.width / 4, 40, 0xffffff);
@@ -114,7 +114,7 @@ public class Optionsscreen extends Screen {
     }
 
     @Override
-    public void onClose(){
+    public void close(){
         FabricrplogClient.CONFIG.loadConfig();
         this.client.setScreen(null);
     }
@@ -122,9 +122,9 @@ public class Optionsscreen extends Screen {
 
     public class Verification extends Screen{
 
-        private Screen previous;
-        private DefaultConfig defaultConfig;
-        private ServerConfig serverConfig;
+        private final Screen previous;
+        private final DefaultConfig defaultConfig;
+        private final ServerConfig serverConfig;
 
         Verification(Screen previous, DefaultConfig defaultConfig, ServerConfig serverConfig){
             super(Text.of(""));
@@ -134,17 +134,17 @@ public class Optionsscreen extends Screen {
         }
 
         public void init(){
-            ButtonWidget delete = new ButtonWidget(this.width / 2 - this.width / 4 - 50, this.height / 2, 100, CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.optionscreen.verification.delete"),
+            ButtonWidget delete = new ButtonWidget(this.width / 2 - this.width / 4 - 50, this.height / 2, 100, CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.optionscreen.verification.delete"),
                     button -> {
                     defaultConfig.removeServerFromList(serverConfig);
-                    super.onClose();
+                    super.close();
                     MinecraftClient.getInstance().setScreen(new Optionsscreen(previous));
                 });
 
 
-            ButtonWidget abort = new ButtonWidget(this.width / 2 + this.width / 4 - 50, this.height / 2,100, CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.optionscreen.verification.cancel"),
+            ButtonWidget abort = new ButtonWidget(this.width / 2 + this.width / 4 - 50, this.height / 2,100, CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.optionscreen.verification.cancel"),
                     button -> {
-                    onClose();
+                    close();
                 });
 
             this.addDrawableChild(delete);
@@ -153,14 +153,14 @@ public class Optionsscreen extends Screen {
         }
 
         public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-            TranslatableText verificationmessage = new TranslatableText("rplog.config.optionscreen.verification.message");
+            Text verificationmessage = Text.translatable("rplog.config.optionscreen.verification.message");
             this.renderBackground(matrices);
             drawCenteredText(matrices, this.textRenderer, verificationmessage, this.width / 2, this.height / 2 - this.height / 4, 0xffffff);
             super.render(matrices, mouseX, mouseY, delta);
         }
 
         @Override
-        public void onClose(){
+        public void close(){
             this.client.setScreen(previous);
         }
 

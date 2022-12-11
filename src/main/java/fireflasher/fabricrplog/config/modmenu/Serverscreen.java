@@ -10,7 +10,6 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import java.util.List;
 
@@ -18,8 +17,8 @@ import static fireflasher.fabricrplog.config.modmenu.Optionsscreen.CLICKABLEWIDG
 
 class Serverscreen extends Screen {
 
-    private Screen previous;
-    private ServerConfig serverConfig;
+    private final Screen previous;
+    private final ServerConfig serverConfig;
 
     Serverscreen(Screen previous, ServerConfig serverConfig) {
         super(Text.of(ChatLogger.getServerNameShortener(serverConfig.getServerDetails().getServerNames())));
@@ -40,22 +39,21 @@ class Serverscreen extends Screen {
         List<String> keywords = serverDetails.getServerKeywords();
 
         int i = 30;
-        ButtonWidget reset = new ButtonWidget(this.width / 2 - this.width / 4 - 50, 13, 100, CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.serverscreen.reset_defaults"),
-                button -> {
+        ButtonWidget reset = new ButtonWidget(this.width / 2 - this.width / 4 - 50, 13, 100, CLICKABLEWIDGETHEIGHT,Text.translatable("rplog.config.serverscreen.reset_defaults"), button -> {
                 serverConfig.getServerDetails().getServerKeywords().clear();
                 serverConfig.getServerDetails().getServerKeywords().addAll(DefaultConfig.defaultKeywords);
                 MinecraftClient.getInstance().setScreen(new Serverscreen(previous, serverConfig));
             });
 
-        ButtonWidget done = new ButtonWidget(this.width / 2 + this.width / 4 - reset.getWidth() / 2 , 13, reset.getWidth(), CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.screen.done"),
+        ButtonWidget done = new ButtonWidget(this.width / 2 + this.width / 4 - reset.getWidth() / 2 , 13, reset.getWidth(), CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.screen.done"),
                 button -> {
                 FabricrplogClient.CONFIG.saveConfig();
-                onClose();
+                close();
             });
 
         for (String keyword : keywords) {
             i = i + 20;
-            ButtonWidget delete = new ButtonWidget(this.width / 2 + this.width / 4 - reset.getWidth() / 2, i - 5, reset.getWidth(), CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.screen.delete"),
+            ButtonWidget delete = new ButtonWidget(this.width / 2 + this.width / 4 - reset.getWidth() / 2, i - 5, reset.getWidth(), CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.screen.delete"),
                     button -> {
                     keywords.remove(keyword);
                     serverConfig.setServerDetails(serverDetails);
@@ -68,7 +66,7 @@ class Serverscreen extends Screen {
         i = i + 20;
         TextFieldWidget insert = new TextFieldWidget(textRenderer, this.width / 2 - this.width / 4 - 50, i, 100, CLICKABLEWIDGETHEIGHT, Text.of("Keyword")) {};
 
-        ButtonWidget add = new ButtonWidget(this.width / 2 + this.width / 4 - insert.getWidth() / 2, i, insert.getWidth(), CLICKABLEWIDGETHEIGHT, new TranslatableText("rplog.config.serverscreen.add_Keywords"),
+        ButtonWidget add = new ButtonWidget(this.width / 2 + this.width / 4 - insert.getWidth() / 2, i, insert.getWidth(), CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.serverscreen.add_Keywords"),
                 button -> {
 
                 if(keywords.contains(insert.getText()));
@@ -100,7 +98,7 @@ class Serverscreen extends Screen {
     }
 
     @Override
-    public void onClose(){
+    public void close(){
         this.client.setScreen(previous);
     }
 

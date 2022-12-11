@@ -5,8 +5,7 @@ import fireflasher.fabricrplog.client.FabricrplogClient;
 import fireflasher.fabricrplog.config.json.JsonConfig;
 import fireflasher.fabricrplog.config.json.ServerConfig;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Util;
+import net.minecraft.text.TranslatableTextContent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,8 +30,8 @@ public class DefaultConfig {
     public void setup() {
         this.ConfigFile = new File(ModsDir + "rplog.json");
         if (ConfigFile.exists()) {
-            Text logger_info = new TranslatableText("rplog.logger.config");
-            LOGGER.info("Config successfully loaded");
+            TranslatableTextContent logger_info = new TranslatableTextContent("rplog.logger.config");
+            LOGGER.info(logger_info);
             loadConfig();
         } else {
             setConfigFile();
