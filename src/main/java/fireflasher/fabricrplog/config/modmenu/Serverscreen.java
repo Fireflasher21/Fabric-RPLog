@@ -18,8 +18,8 @@ import static fireflasher.fabricrplog.config.modmenu.Optionsscreen.CLICKABLEWIDG
 
 class Serverscreen extends Screen {
 
-    private Screen previous;
-    private ServerConfig serverConfig;
+    private final Screen previous;
+    private final ServerConfig serverConfig;
 
     Serverscreen(Screen previous, ServerConfig serverConfig) {
         super(Text.of(ChatLogger.getServerNameShortener(serverConfig.getServerDetails().getServerNames())));

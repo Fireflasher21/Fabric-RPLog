@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 
 public class Optionsscreen extends Screen {
 
-    private Screen previous;
+    private final Screen previous;
     private EntryListWidget buttonList;
     static final int CLICKABLEWIDGETHEIGHT = 20;
     private final ServerConfig dummy = new ServerConfig("dummy", List.of("dummy"), List.of("dummy"));
@@ -122,9 +122,9 @@ public class Optionsscreen extends Screen {
 
     public class Verification extends Screen{
 
-        private Screen previous;
-        private DefaultConfig defaultConfig;
-        private ServerConfig serverConfig;
+        private final Screen previous;
+        private final DefaultConfig defaultConfig;
+        private final ServerConfig serverConfig;
 
         Verification(Screen previous, DefaultConfig defaultConfig, ServerConfig serverConfig){
             super(Text.of(""));
