@@ -3,12 +3,10 @@ package fireflasher.fabricrplog;
 import fireflasher.fabricrplog.client.FabricrplogClient;
 import fireflasher.fabricrplog.config.json.ServerConfig;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.network.ClientConnection;
-import net.minecraft.text.TranslatableTextContent;
+import net.minecraft.text.Text;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.net.SocketAddress;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -117,7 +115,7 @@ public class ChatLogger {
                             if(new File(filename).exists()) fileToZip.delete();
                         }
                         catch (IOException e){
-                            TranslatableTextContent logger_zipwarning  = new TranslatableTextContent("rplog.logger.chatlogger.zip_warning");
+                            Text logger_zipwarning  =  Text.translatable("rplog.logger.chatlogger.zip_warning");
                             LOGGER.warn(logger_zipwarning);
                         }
                     }
@@ -140,7 +138,7 @@ public class ChatLogger {
                     path.mkdir();
                     log.createNewFile();
                 } catch (IOException e) {
-                    TranslatableTextContent logger_creationwarning = new TranslatableTextContent("rplog.logger.chatlogger.creation_warning");
+                    Text logger_creationwarning = Text.translatable("rplog.logger.chatlogger.creation_warning");
                     LOGGER.warn(logger_creationwarning + " " + log.toString());
                     error = true;
                 }
@@ -163,7 +161,7 @@ public class ChatLogger {
             timedmessage = chat;
 
         } catch (IOException e) {
-            TranslatableTextContent logger_writewarning = new TranslatableTextContent("rplog.logger.chatlogger.write_warning");
+            Text logger_writewarning = Text.translatable("rplog.logger.chatlogger.write_warning");
             LOGGER.warn( logger_writewarning + " " + log.toString());
         }
     }
