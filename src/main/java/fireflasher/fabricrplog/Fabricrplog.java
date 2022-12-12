@@ -11,7 +11,5 @@ public class Fabricrplog implements ModInitializer {
     @Override
     public void onInitialize() {
 
-
-
     }
 }
