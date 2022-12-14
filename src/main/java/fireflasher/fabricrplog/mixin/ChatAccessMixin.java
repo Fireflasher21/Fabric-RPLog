@@ -1,25 +1,22 @@
 package fireflasher.fabricrplog.mixin;
 
 
-import fireflasher.fabricrplog.listener.ChatAccess;
-import net.minecraft.client.gui.ClientChatListener;
-import net.minecraft.client.gui.hud.InGameHud;
+import fireflasher.fabricrplog.ChatLogger;
+import net.minecraft.client.gui.hud.ChatHudListener;
 import net.minecraft.network.MessageType;
-import org.spongepowered.asm.mixin.Final;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.List;
-import java.util.Map;
+import java.util.UUID;
 
-@Mixin(InGameHud.class)
-public abstract class ChatAccessMixin implements ChatAccess {
+@Mixin(ChatHudListener.class)
+public abstract class ChatAccessMixin {
 
-    @Shadow
-    @Final
-    private Map<MessageType, List<ClientChatListener>> listeners;
-
-    public void registerChatListener(MessageType messageType, ClientChatListener listener) {
-        this.listeners.get(messageType).add(listener);
+    @Inject(method = "onChatMessage", at = @At("HEAD"), cancellable = true)
+    public void onChatMessage(MessageType type, Text message, UUID sender, CallbackInfo ci) {
+        ChatLogger.chatFilter(message.asString());
     }
 }
