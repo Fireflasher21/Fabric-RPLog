@@ -1,8 +1,6 @@
 package fireflasher.fabricrplog;
 
-import fireflasher.fabricrplog.listener.ChatAccess;
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.network.MessageType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

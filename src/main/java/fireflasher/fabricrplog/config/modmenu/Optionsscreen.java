@@ -22,7 +22,7 @@ public class Optionsscreen extends Screen {
     static final int CLICKABLEWIDGETHEIGHT = 20;
     private final ServerConfig dummy = new ServerConfig("dummy", List.of("dummy"), List.of("dummy"));
 
-    Optionsscreen(Screen previous) {
+    public Optionsscreen(Screen previous) {
         super(new TranslatableText("rplog.config.optionscreen.title"));
         this.previous = previous;
     }
@@ -114,7 +114,7 @@ public class Optionsscreen extends Screen {
     @Override
     public void onClose(){
         FabricrplogClient.CONFIG.loadConfig();
-        this.client.setScreen(null);
+        this.client.setScreen(previous);
     }
 
 
