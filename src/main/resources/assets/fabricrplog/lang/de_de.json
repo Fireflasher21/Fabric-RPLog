@@ -6,6 +6,7 @@
   "rplog.config.optionscreen.add_Server":"Server Hinzufügen",
   "rplog.config.optionscreen.configuration_Servers": "Konfigurierbare Server",
   "rplog.config.optionscreen.delete_Servers": "Server Löschen",
+  "rplog.config.optionscreen.open_LogFolder": "Öffne Log Ordner",
   "rplog.config.optionscreen.verification.delete":"Ja",
   "rplog.config.optionscreen.verification.cancel":"Nein",
   "rplog.config.optionscreen.verification.message":"Bist du sicher, dass du den Server löschen willst?",
@@ -16,5 +17,7 @@
   "rplog.logger.config": "Config erfolgreich geladen",
   "rplog.logger.chatlogger.zip_warning": "RPLOG Datei konnte nicht verpackt werden",
   "rplog.logger.chatlogger.creation_warning": "RPLog Datei konnte nicht erstellt werden ",
-  "rplog.logger.chatlogger.write_warning": "RPLog Datei konnte nicht beschrieben werden: "
+  "rplog.logger.chatlogger.write_warning": "RPLog Datei konnte nicht beschrieben werden: ",
+  "rplog.config.optionscreen.open_LogFolder": "Open Log Folder",
+  "rplog.config.serverscreen.serverAdress": "ServerAdress"
 }
