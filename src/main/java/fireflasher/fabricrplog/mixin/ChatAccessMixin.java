@@ -1,6 +1,5 @@
 package fireflasher.fabricrplog.mixin;
 
-import com.mojang.authlib.GameProfile;
 import fireflasher.fabricrplog.ChatLogger;
 import net.minecraft.client.network.message.MessageHandler;
 import net.minecraft.network.message.MessageType;

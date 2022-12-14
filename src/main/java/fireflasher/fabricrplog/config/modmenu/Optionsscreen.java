@@ -23,7 +23,7 @@ public class Optionsscreen extends Screen {
     static final int CLICKABLEWIDGETHEIGHT = 20;
     private final ServerConfig dummy = new ServerConfig("dummy", List.of("dummy"), List.of("dummy"));
 
-    Optionsscreen(Screen previous) {
+    public Optionsscreen(Screen previous) {
         super(Text.translatable("rplog.config.optionscreen.title"));
         this.previous = previous;
     }
