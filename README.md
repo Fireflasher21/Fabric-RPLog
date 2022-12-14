@@ -2,7 +2,7 @@
 This Mod is a simple Log Plugin, which logs Keywords which you can specify beforehanded and mid Playing. 
 It saves it logs in sorted Folders per Server and you can add custom Keyword Lists for each Server
 If none Custom Server List is given, the Mod uses the Default List which can also be edited independtly
-At the Moment it can only be Configured with Modmenu from Terraformers: https://github.com/TerraformersMC/ModMenu
+Versions below 4.2  can only be Configured with Modmenu from Terraformers: https://github.com/TerraformersMC/ModMenu
 
 A Forge equivalent exists too, check out here: https://github.com/Fireflasher21/Forge-RPLog
 All Major Version Steps are syncronised so you dont get confused.
@@ -17,3 +17,4 @@ If you want to check out the Server here you go: https://Aegorin.de
 But keep in mind, that the Servers only language is German
 
 [![Github All Releases](https://img.shields.io/github/downloads/fireflasher21/fabric-rplog/total.svg)]()
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A0A2H14AJ)
