@@ -39,26 +39,27 @@ class Serverscreen extends Screen {
         List<String> keywords = serverDetails.getServerKeywords();
 
         int i = 30;
-        ButtonWidget reset = ButtonWidget.builder(Text.translatable("rplog.config.serverscreen.reset_defaults"), button -> {
+        ButtonWidget reset = new ButtonWidget(this.width / 2 - this.width / 4 - 50, 13, 100, CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.serverscreen.reset_defaults"),
+                button -> {
                 serverConfig.getServerDetails().getServerKeywords().clear();
                 serverConfig.getServerDetails().getServerKeywords().addAll(DefaultConfig.defaultKeywords);
                 MinecraftClient.getInstance().setScreen(new Serverscreen(previous, serverConfig));
-            }).dimensions(this.width / 2 - this.width / 4 - 50, 13, 100, CLICKABLEWIDGETHEIGHT).build();
+            });
 
-        ButtonWidget done = ButtonWidget.builder(Text.translatable("rplog.config.screen.done"),
+        ButtonWidget done = new ButtonWidget(this.width / 2 + this.width / 4 - reset.getWidth() / 2 , 13, reset.getWidth(), CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.screen.done"),
                 button -> {
                 FabricrplogClient.CONFIG.saveConfig();
                 close();
-            }).dimensions(this.width / 2 + this.width / 4 - reset.getWidth() / 2 , 13, reset.getWidth(), CLICKABLEWIDGETHEIGHT).build();
+            });
 
         for (String keyword : keywords) {
             i = i + 20;
-            ButtonWidget delete = ButtonWidget.builder(Text.translatable("rplog.config.screen.delete"),
+            ButtonWidget delete = new ButtonWidget(this.width / 2 + this.width / 4 - reset.getWidth() / 2, i - 5, reset.getWidth(), CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.screen.delete"),
                     button -> {
                     keywords.remove(keyword);
                     serverConfig.setServerDetails(serverDetails);
                     MinecraftClient.getInstance().setScreen(new Serverscreen(previous, serverConfig));
-                }).dimensions(this.width / 2 + this.width / 4 - reset.getWidth() / 2, i - 5, reset.getWidth(), CLICKABLEWIDGETHEIGHT).build();
+                });
 
             this.addDrawableChild(delete);
         }
@@ -66,7 +67,7 @@ class Serverscreen extends Screen {
         i = i + 20;
         TextFieldWidget insert = new TextFieldWidget(textRenderer, this.width / 2 - this.width / 4 - 50, i, 100, CLICKABLEWIDGETHEIGHT, Text.of("Keyword")) {};
 
-        ButtonWidget add = ButtonWidget.builder(Text.translatable("rplog.config.serverscreen.add_Keywords"),
+        ButtonWidget add = new ButtonWidget(this.width / 2 + this.width / 4 - insert.getWidth() / 2, i, insert.getWidth(), CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.serverscreen.add_Keywords"),
                 button -> {
 
                 if(keywords.contains(insert.getText()));
@@ -74,7 +75,9 @@ class Serverscreen extends Screen {
                     keywords.add(insert.getText());
                     serverConfig.setServerDetails(serverDetails);
                     MinecraftClient.getInstance().setScreen(new Serverscreen(previous, serverConfig));
-                }}).dimensions(this.width / 2 + this.width / 4 - insert.getWidth() / 2, i, insert.getWidth(), CLICKABLEWIDGETHEIGHT).build();
+                }
+
+            });
 
         this.addDrawableChild(done);
         this.addDrawableChild(reset);

@@ -38,15 +38,17 @@ public class Optionsscreen extends Screen {
         }
         for (ServerConfig server : serverConfigList) {
             i = i + 25;
-            ButtonWidget serverNameButton = ButtonWidget.builder(Text.of(ChatLogger.getServerNameShortener(server.getServerDetails().getServerNames())),
-                    button ->{
-                        MinecraftClient.getInstance().setScreen(new Serverscreen(MinecraftClient.getInstance().currentScreen, server));
-                    }).dimensions(this.width / 2 - this.width / 4 - 50, i, 100, CLICKABLEWIDGETHEIGHT).build();
+            ButtonWidget serverNameButton = new ButtonWidget(this.width / 2 - this.width / 4 - 50, i, 100, CLICKABLEWIDGETHEIGHT, Text.of(ChatLogger.getServerNameShortener(server.getServerDetails().getServerNames())),
+            button ->{
+                    MinecraftClient.getInstance().setScreen(new Serverscreen(MinecraftClient.getInstance().currentScreen, server));
+                });
 
-            ButtonWidget delete = ButtonWidget.builder(Text.translatable("rplog.config.screen.delete"),
+
+
+            ButtonWidget delete = new ButtonWidget(this.width / 2 + this.width / 4 - serverNameButton.getWidth() / 2, i, serverNameButton.getWidth(), CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.screen.delete"),
                     button -> {
-                        MinecraftClient.getInstance().setScreen(new Verification(MinecraftClient.getInstance().currentScreen, defaultConfig, server));
-                    }).dimensions(this.width / 2 + this.width / 4 - serverNameButton.getWidth() / 2, i, serverNameButton.getWidth(), CLICKABLEWIDGETHEIGHT).build();
+                    MinecraftClient.getInstance().setScreen(new Verification(MinecraftClient.getInstance().currentScreen, defaultConfig, server));
+                });
 
             if (!serverConfigList.contains(dummy)) {
                 this.addDrawableChild(serverNameButton);
@@ -55,43 +57,42 @@ public class Optionsscreen extends Screen {
         }
         serverConfigList.remove(dummy);
 
-        ButtonWidget addServer = ButtonWidget.builder(Text.translatable("rplog.config.optionscreen.add_Server"),
+        ButtonWidget addServer = new ButtonWidget(this.width / 2 - this.width / 4 - 50, 13, 100, CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.optionscreen.add_Server"),
                 button -> {
-                    if (MinecraftClient.getInstance().getNetworkHandler() == null || MinecraftClient.getInstance().getNetworkHandler().getConnection().isLocal()) {
-                    } else {
-                        String address = MinecraftClient.getInstance().getNetworkHandler().getConnection().getAddress().toString();
-                        Pattern serverAddress = Pattern.compile("static.([0-9]{1,3}[.]){4}");
-                        String serverName;
-                        Boolean ipMatcher = serverAddress.matcher(address.split("/")[0]).find();
-                        String ip = address.split("/")[1];
-                        ip = ip.split(":")[0];
-                        if (ipMatcher) serverName = ip;
-                        else serverName = address.split("/")[0];
-                        defaultConfig.addServerToList(ip, serverName);
-                        defaultConfig.loadConfig();
-                        MinecraftClient.getInstance().setScreen(new Optionsscreen(previous));
-                    }
-                }).dimensions(this.width / 2 - this.width / 4 - 50, 13, 100, CLICKABLEWIDGETHEIGHT).build();
+                if (MinecraftClient.getInstance().getNetworkHandler() == null || MinecraftClient.getInstance().getNetworkHandler().getConnection().isLocal()) {
+                } else {
+                    String address = MinecraftClient.getInstance().getNetworkHandler().getConnection().getAddress().toString();
+                    Pattern serverAddress = Pattern.compile("static.([0-9]{1,3}[.]){4}");
+                    String serverName;
+                    Boolean ipMatcher = serverAddress.matcher(address.split("/")[0]).find();
+                    String ip = address.split("/")[1];
+                    ip = ip.split(":")[0];
+                    if(ipMatcher) serverName = ip;
+                    else serverName = address.split("/")[0];
+                    defaultConfig.addServerToList(ip, serverName);
+                    defaultConfig.loadConfig();
+                    MinecraftClient.getInstance().setScreen(new Optionsscreen(previous));
+                }
+            });
 
 
-
-                ButtonWidget defaultconfigbutton = ButtonWidget.builder(Text.translatable("rplog.config.screen.defaults"),
+        ButtonWidget defaultconfigbutton = new ButtonWidget(this.width / 2 + this.width / 4 - 50 , 13, 100, CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.screen.defaults"),
                 button -> {
-                    ServerConfig defaults = new ServerConfig("Defaults", List.of("Defaults"), FabricrplogClient.CONFIG.getKeywords());
-                    MinecraftClient.getInstance().setScreen(new Serverscreen(MinecraftClient.getInstance().currentScreen, defaults));
-                }).dimensions(this.width / 2 + this.width / 4 - 50, 13, 100, CLICKABLEWIDGETHEIGHT).build();
+                ServerConfig defaults = new ServerConfig("Defaults",List.of("Defaults"),FabricrplogClient.CONFIG.getKeywords());
+                MinecraftClient.getInstance().setScreen(new Serverscreen(MinecraftClient.getInstance().currentScreen, defaults));
+            });
 
 
-        ButtonWidget done = ButtonWidget.builder(Text.translatable("rplog.config.screen.done"),
+        ButtonWidget done = new ButtonWidget(this.width / 2 + this.width / 4 - 50, this.height - 30, 100 , CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.screen.done"),
                 button -> {
                     close();
                     defaultConfig.loadConfig();
-                }).dimensions(this.width / 2 + this.width / 4 - 50, this.height - 30, 100, CLICKABLEWIDGETHEIGHT).build();
+                });
 
-        ButtonWidget openFolder = ButtonWidget.builder(Text.translatable("rplog.config.optionscreen.open_LogFolder"),
-                button -> {
+        ButtonWidget openFolder = new ButtonWidget(this.width / 2 - this.width / 4 - 50, this.height - 30, 100 , CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.optionscreen.open_LogFolder"),
+                button ->{
                     Util.getOperatingSystem().open(new File(FabricrplogClient.getFolder()));
-                }).dimensions(this.width / 2 - this.width / 4 - 50, this.height - 30, 100, CLICKABLEWIDGETHEIGHT).build();
+                });
 
         this.addDrawableChild(defaultconfigbutton);
         this.addDrawableChild(addServer);
@@ -113,7 +114,7 @@ public class Optionsscreen extends Screen {
     @Override
     public void close() {
         FabricrplogClient.CONFIG.loadConfig();
-        this.client.setScreen(null);
+        this.client.setScreen(previous);
     }
 
 
@@ -123,26 +124,26 @@ public class Optionsscreen extends Screen {
         private final DefaultConfig defaultConfig;
         private final ServerConfig serverConfig;
 
-        Verification(Screen previous, DefaultConfig defaultConfig, ServerConfig serverConfig) {
+        Verification(Screen previous, DefaultConfig defaultConfig, ServerConfig serverConfig){
             super(Text.of(""));
             this.previous = previous;
             this.defaultConfig = defaultConfig;
             this.serverConfig = serverConfig;
         }
 
-        public void init() {
-            ButtonWidget delete = ButtonWidget.builder(Text.translatable("rplog.config.optionscreen.verification.delete"),
+        public void init(){
+            ButtonWidget delete = new ButtonWidget(this.width / 2 - this.width / 4 - 50, this.height / 2, 100, CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.optionscreen.verification.delete"),
                     button -> {
-                        defaultConfig.removeServerFromList(serverConfig);
-                        super.close();
-                        MinecraftClient.getInstance().setScreen(new Optionsscreen(previous));
-                    }).dimensions(this.width / 2 - this.width / 4 - 50, this.height / 2, 100, CLICKABLEWIDGETHEIGHT).build();
+                    defaultConfig.removeServerFromList(serverConfig);
+                    super.close();
+                    MinecraftClient.getInstance().setScreen(new Optionsscreen(previous));
+                });
 
 
-            ButtonWidget abort = ButtonWidget.builder(Text.translatable("rplog.config.optionscreen.verification.cancel"),
+            ButtonWidget abort = new ButtonWidget(this.width / 2 + this.width / 4 - 50, this.height / 2,100, CLICKABLEWIDGETHEIGHT, Text.translatable("rplog.config.optionscreen.verification.cancel"),
                     button -> {
-                        close();
-                    }).dimensions(this.width / 2 + this.width / 4 - 50, this.height / 2, 100, CLICKABLEWIDGETHEIGHT).build();
+                    close();
+                });
 
             this.addDrawableChild(delete);
             this.addDrawableChild(abort);
@@ -157,7 +158,7 @@ public class Optionsscreen extends Screen {
         }
 
         @Override
-        public void close() {
+        public void close(){
             this.client.setScreen(previous);
         }
 
