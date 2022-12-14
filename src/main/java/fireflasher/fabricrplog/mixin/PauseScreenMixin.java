@@ -25,10 +25,9 @@ public abstract class PauseScreenMixin extends Screen {
     @Inject(method = ("initWidgets"), at = @At("HEAD"))
     public void createPauseMenu(CallbackInfo callbackInfo){
         if(!FabricLoader.getInstance().isModLoaded("modmenu")) {
-            ButtonWidget accessModOption = new ButtonWidget(0, 0, 35, 20, Text.of("RPL"), button -> {
+            ButtonWidget accessModOption = ButtonWidget.builder(Text.of("RPL"), button -> {
                 MinecraftClient.getInstance().setScreen(new Optionsscreen(this));
-            });
-            addDrawableChild(accessModOption);
+            }).dimensions(0, 0, 35, 20).build();
         }
     }
 }
