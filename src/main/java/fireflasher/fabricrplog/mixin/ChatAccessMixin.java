@@ -17,6 +17,6 @@ public abstract class ChatAccessMixin {
 
     @Inject(method = "onChatMessage", at = @At("HEAD"), cancellable = true)
     public void onChatMessage(MessageType type, Text message, UUID sender, CallbackInfo ci) {
-        ChatLogger.chatFilter(message.asString());
+        ChatLogger.chatFilter(message.getString());
     }
 }
