@@ -55,28 +55,26 @@ public class ChatLogger {
         boolean isChannel = channellist.stream().anyMatch(chat::contains);
         if (isChannel) addMessage(chat);
     }
-
+    
     public static void servercheck(){
-        String[] ipArray = new String[2];
-        String ip = Minecraft.getInstance().getCurrentServer().ip;
-        String serverNameTMP = Minecraft.getInstance().getCurrentServer().name;
-        ipArray = getIP(ip ,serverNameTMP);
+        String address = MinecraftClient.getInstance().getNetworkHandler().getConnection().getAddress().toString();
+        String ip = address.split("/")[1];
+        ip = ip.split(":")[0];
 
-        ServerConfig serverConfig = CONFIG.getServerObject(ipArray[0]);
+        ServerConfig serverConfig = CONFIG.getServerObject(ip);
 
         if( serverConfig != null){
             channellist = serverConfig.getServerDetails().getServerKeywords();
-            if(!ipArray[1].contains(serverName) || serverName.equals("Local")) {
+            if(!address.split("/")[0].contains(serverName) || serverName.equals("Local")) {
                 serverName = getServerNameShortener(serverConfig.getServerDetails().getServerNames());
             }
         }
-        else {
-            serverName = ipArray[1];
+        else{
+            serverName = adress.split("/")[0];
             channellist = CONFIG.getKeywords();
         }
-        serverIP = ipArray[0];
+        serverIP = ip;
     }
-
     public void setup() {
         String path = FabricrplogClient.getFolder();
         if(!new File(path).exists())new File(path).mkdir();
