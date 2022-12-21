@@ -35,26 +35,9 @@ public class ChatLogger {
     private static List<String> channellist = new ArrayList<>();
     private static String timedmessage = "";
     private static boolean error;
-
-
-    public static void servercheck(){
-        String address = MinecraftClient.getInstance().getNetworkHandler().getConnection().getAddress().toString();
-        String ip = address.split("/")[1];
-        ip = ip.split(":")[0];
-
-        ServerConfig serverConfig = CONFIG.getServerObject(ip);
-
-        if( serverConfig != null){
-            channellist = serverConfig.getServerDetails().getServerKeywords();
-            if(!address.split("/")[0].contains(serverName) || serverName.equals("Local")) {
-                serverName = getServerNameShortener(serverConfig.getServerDetails().getServerNames());
-            }
-        }
-        else channellist = CONFIG.getKeywords();
-        serverIP = ip;
-    }
-
-
+    
+    
+    
     public static void chatFilter(String chat){
 
         // TODO: Debug
@@ -71,9 +54,27 @@ public class ChatLogger {
 
         boolean isChannel = channellist.stream().anyMatch(chat::contains);
         if (isChannel) addMessage(chat);
+    }
 
+    public static void servercheck(){
+        String[] ipArray = new String[2];
+        String ip = Minecraft.getInstance().getCurrentServer().ip;
+        String serverNameTMP = Minecraft.getInstance().getCurrentServer().name;
+        ipArray = getIP(ip ,serverNameTMP);
 
+        ServerConfig serverConfig = CONFIG.getServerObject(ipArray[0]);
 
+        if( serverConfig != null){
+            channellist = serverConfig.getServerDetails().getServerKeywords();
+            if(!ipArray[1].contains(serverName) || serverName.equals("Local")) {
+                serverName = getServerNameShortener(serverConfig.getServerDetails().getServerNames());
+            }
+        }
+        else {
+            serverName = ipArray[1];
+            channellist = CONFIG.getKeywords();
+        }
+        serverIP = ipArray[0];
     }
 
     public void setup() {
@@ -194,6 +195,27 @@ public class ChatLogger {
             name = name.split("\\.")[0];
         }
         return name;
+    }
+    
+    public static String[] getIP(String ip, String serverName){
+        String ip1 = ip;
+        int[] dotscount = new int[]{0,0};
+        while(ip.length() > dotscount[0]){  //Count dots for IP Check
+            if(ip.charAt(dotscount[0]) == '.') dotscount[1] ++;
+            dotscount[0] ++;
+        }
+        if(dotscount[1] < 3){   //Check if IP is IP or Name per dots in String
+            try {
+                InetAddress adress = InetAddress.getByName(ip);
+                ip = adress.getHostAddress();   //Get real ip per domain in String
+            } catch (UnknownHostException e) { throw new RuntimeException(e);}
+
+            if(dotscount[1] == 2) ip1 = ip1.split("\\.")[1];
+            else ip1 = ip1.split("\\.")[0];
+            serverName = ip1;   //Split Domain in Name
+        }
+        String[] serverIP = new String[]{ip, serverName};
+        return serverIP;
     }
 
     private boolean organizeFolders(ServerConfig serverConfig){
