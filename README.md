@@ -4,7 +4,7 @@ It saves it logs in sorted Folders per Server and you can add custom Keyword Lis
 If none Custom Server List is given, the Mod uses the Default List which can also be edited independtly
 Versions below 4.2  can only be Configured with Modmenu from Terraformers: https://github.com/TerraformersMC/ModMenu
 
-A Forge equivalent exists too, check out here: https://github.com/Fireflasher21/Forge-RPLog
+A Forge equivalent exists too, check out here: https://modrinth.com/mod/rplog
 All Major Version Steps are syncronised so you dont get confused.
 
 If you experience any Crashes or Bugs open an Issue. Im also always happy to improve the mod, so send me ideas of what you think would be neat to add.
@@ -16,5 +16,4 @@ In my Case it was Aegorin and all the people who make this Server what it is. To
 If you want to check out the Server here you go: https://Aegorin.de
 But keep in mind, that the Servers only language is German
 
-[![Github All Releases](https://img.shields.io/github/downloads/fireflasher21/fabric-rplog/total.svg)]()
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A0A2H14AJ)
