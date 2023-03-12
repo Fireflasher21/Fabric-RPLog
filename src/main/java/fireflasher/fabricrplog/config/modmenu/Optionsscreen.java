@@ -30,6 +30,7 @@ public class Optionsscreen extends Screen {
 
 
     protected void init() {
+
         int i = 30;
         DefaultConfig defaultConfig = FabricrplogClient.CONFIG;
         List<ServerConfig> serverConfigList = defaultConfig.getList();

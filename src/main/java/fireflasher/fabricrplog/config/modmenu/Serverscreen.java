@@ -7,6 +7,7 @@ import fireflasher.fabricrplog.config.json.ServerConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.ScrollableWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -41,7 +42,7 @@ class Serverscreen extends Screen {
         int i = 30;
         ButtonWidget reset = ButtonWidget.builder(Text.translatable("rplog.config.serverscreen.reset_defaults"), button -> {
                 serverConfig.getServerDetails().getServerKeywords().clear();
-                serverConfig.getServerDetails().getServerKeywords().addAll(DefaultConfig.defaultKeywords);
+                serverConfig.getServerDetails().getServerKeywords().addAll(FabricrplogClient.CONFIG.getKeywords());
                 MinecraftClient.getInstance().setScreen(new Serverscreen(previous, serverConfig));
             }).dimensions(this.width / 2 - this.width / 4 - 50, 13, 100, CLICKABLEWIDGETHEIGHT).build();
 

@@ -8,8 +8,8 @@
     "Fireflasher"
   ],
   "contact": {
-    "homepage": "https://github.com/Fireflasher21/Fabric-RPLog",
-    "issues": "https://github.com/Fireflasher21/Fabric-RPLog/issues"
+    "homepage": "https://modrinth.com/mod/rplog",
+    "issues": "https://discord.gg/V9XcJSSdwB"
   },
   "license": "All-Rights-Reserved",
   "icon": "assets/fabricrplog/icon.png",
@@ -26,11 +26,10 @@
     ]
   },
   "mixins": [
-    "Fabricrplog.mixins.json"
+    "fabricrplog.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.10.7",
-    "fabric": "*",
     "minecraft": "1.19.3"
   },
   "custom": {
