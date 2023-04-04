@@ -30,7 +30,7 @@ public class DefaultConfig {
     public void setup() {
         this.ConfigFile = new File(ModsDir + "rplog.json");
         if (ConfigFile.exists()) {
-            TranslatableTextContent logger_info = new TranslatableTextContent("rplog.logger.config");
+            Text logger_info = Text.translatable("rplog.logger.config");
             LOGGER.info(logger_info);
             loadConfig();
         } else {

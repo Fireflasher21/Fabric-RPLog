@@ -115,7 +115,7 @@ public class ChatLogger {
                             if(new File(filename).exists()) fileToZip.delete();
                         }
                         catch (IOException e){
-                            Text logger_zipwarning  = Text.translatable("rplog.logger.chatlogger.zip_warning");
+                            Text logger_zipwarning  =  Text.translatable("rplog.logger.chatlogger.zip_warning");
                             LOGGER.warn(logger_zipwarning);
                         }
                     }

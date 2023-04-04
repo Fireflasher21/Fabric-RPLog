@@ -23,14 +23,13 @@ public class Optionsscreen extends Screen {
     static final int CLICKABLEWIDGETHEIGHT = 20;
     private final ServerConfig dummy = new ServerConfig("dummy", List.of("dummy"), List.of("dummy"));
 
-    Optionsscreen(Screen previous) {
+   public Optionsscreen(Screen previous) {
         super(Text.translatable("rplog.config.optionscreen.title"));
         this.previous = previous;
     }
 
 
     protected void init() {
-
         int i = 30;
         DefaultConfig defaultConfig = FabricrplogClient.CONFIG;
         List<ServerConfig> serverConfigList = defaultConfig.getList();
@@ -105,16 +104,16 @@ public class Optionsscreen extends Screen {
         Text serverlist = Text.translatable("rplog.config.optionscreen.configuration_Servers");
         Text deleteServer = Text.translatable("rplog.config.optionscreen.delete_Servers");
         this.renderBackground(matrices);
-        drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 18, 0xffffff);
-        drawCenteredText(matrices, this.textRenderer, serverlist, this.width / 2 - this.width / 4, 40, 0xffffff);
-        drawCenteredText(matrices, this.textRenderer, deleteServer, this.width / 2 + this.width / 4, 40, 0xffffff);
+        drawCenteredTextWithShadow(matrices, this.textRenderer, this.title, this.width / 2, 18, 0xffffff);
+        drawCenteredTextWithShadow(matrices, this.textRenderer, serverlist, this.width / 2 - this.width / 4, 40, 0xffffff);
+        drawCenteredTextWithShadow(matrices, this.textRenderer, deleteServer, this.width / 2 + this.width / 4, 40, 0xffffff);
         super.render(matrices, mouseX, mouseY, delta);
     }
 
     @Override
     public void close() {
         FabricrplogClient.CONFIG.loadConfig();
-        this.client.setScreen(null);
+        this.client.setScreen(previous);
     }
 
 
@@ -124,7 +123,7 @@ public class Optionsscreen extends Screen {
         private final DefaultConfig defaultConfig;
         private final ServerConfig serverConfig;
 
-        Verification(Screen previous, DefaultConfig defaultConfig, ServerConfig serverConfig) {
+        Verification(Screen previous, DefaultConfig defaultConfig, ServerConfig serverConfig){
             super(Text.of(""));
             this.previous = previous;
             this.defaultConfig = defaultConfig;
@@ -153,12 +152,12 @@ public class Optionsscreen extends Screen {
         public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
             Text verificationmessage = Text.translatable("rplog.config.optionscreen.verification.message");
             this.renderBackground(matrices);
-            drawCenteredText(matrices, this.textRenderer, verificationmessage, this.width / 2, this.height / 2 - this.height / 4, 0xffffff);
+            drawCenteredTextWithShadow(matrices, this.textRenderer, verificationmessage, this.width / 2, this.height / 2 - this.height / 4, 0xffffff);
             super.render(matrices, mouseX, mouseY, delta);
         }
 
         @Override
-        public void close() {
+        public void close(){
             this.client.setScreen(previous);
         }
 

@@ -7,7 +7,6 @@ import fireflasher.fabricrplog.config.json.ServerConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.ScrollableWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -86,12 +85,12 @@ class Serverscreen extends Screen {
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         this.renderBackground(matrices);
-        drawCenteredText(matrices, this.textRenderer, this.title, this.width / 2, 18, 0xffffff);
+        drawCenteredTextWithShadow(matrices, this.textRenderer, this.title, this.width / 2, 18, 0xffffff);
         List<String> keywords = serverConfig.getServerDetails().getServerKeywords();
         int i = 30;
         for(String keyword:keywords){
             i = i + 20;
-            drawCenteredText(matrices, this.textRenderer, Text.of(keyword), this.width / 2 - this.width / 4 , i ,0xffffff);
+            drawCenteredTextWithShadow(matrices, this.textRenderer, Text.of(keyword), this.width / 2 - this.width / 4 , i ,0xffffff);
         }
         super.render(matrices, mouseX, mouseY, delta);
     }
