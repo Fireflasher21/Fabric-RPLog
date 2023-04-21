@@ -22,7 +22,7 @@ public class DefaultConfig {
     private static final Gson GSON = new Gson();
     private static final String ModsDir = FabricrplogClient.getModsFolder();
     private List<String> Keywords = new ArrayList<>();
-    public static final List<String> defaultKeywords = Arrays.asList("[Flüstern]","[Leise]","[Reden]","[Rufen]","[PRufen]","[Schreien]");
+    public static final List<String> defaultKeywords = Arrays.asList("[Flüstern]","[Leise]","[Reden]","[PReden]","[Rufen]","[PRufen]","[Schreien]");
 
     public List<ServerConfig> serverList = new ArrayList<>();
     private static final Logger LOGGER = LogManager.getLogger("FabricRPLog DefaultConfig");
