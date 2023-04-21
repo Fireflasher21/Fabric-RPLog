@@ -2,8 +2,10 @@ package fireflasher.fabricrplog;
 
 import fireflasher.fabricrplog.client.FabricrplogClient;
 import fireflasher.fabricrplog.config.json.ServerConfig;
+import net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
@@ -37,18 +39,21 @@ public class ChatLogger {
 
     public static void servercheck(){
         String address = MinecraftClient.getInstance().getNetworkHandler().getConnection().getAddress().toString();
+        String serverNameTemp = address.split("/")[0].split("\\.")[1];
         String ip = address.split("/")[1];
         ip = ip.split(":")[0];
 
         ServerConfig serverConfig = CONFIG.getServerObject(ip);
-
         if( serverConfig != null){
             channellist = serverConfig.getServerDetails().getServerKeywords();
             if(!address.split("/")[0].contains(serverName) || serverName.equals("Local")) {
                 serverName = getServerNameShortener(serverConfig.getServerDetails().getServerNames());
             }
         }
-        else channellist = CONFIG.getKeywords();
+        else{
+            channellist = CONFIG.getKeywords();
+            serverName = serverNameTemp;
+        }
         serverIP = ip;
     }
 
