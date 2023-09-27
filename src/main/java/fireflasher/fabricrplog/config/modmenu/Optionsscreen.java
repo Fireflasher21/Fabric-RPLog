@@ -5,6 +5,7 @@ import fireflasher.fabricrplog.client.FabricrplogClient;
 import fireflasher.fabricrplog.config.DefaultConfig;
 import fireflasher.fabricrplog.config.json.ServerConfig;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.EntryListWidget;
@@ -100,14 +101,14 @@ public class Optionsscreen extends Screen {
 
     }
 
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+    public void render(DrawContext drawContext, int mouseX, int mouseY, float delta) {
         Text serverlist = Text.translatable("rplog.config.optionscreen.configuration_Servers");
         Text deleteServer = Text.translatable("rplog.config.optionscreen.delete_Servers");
-        this.renderBackground(matrices);
-        drawCenteredTextWithShadow(matrices, this.textRenderer, this.title, this.width / 2, 18, 0xffffff);
-        drawCenteredTextWithShadow(matrices, this.textRenderer, serverlist, this.width / 2 - this.width / 4, 40, 0xffffff);
-        drawCenteredTextWithShadow(matrices, this.textRenderer, deleteServer, this.width / 2 + this.width / 4, 40, 0xffffff);
-        super.render(matrices, mouseX, mouseY, delta);
+        this.renderBackground(drawContext);
+        drawContext.drawTextWithShadow(this.textRenderer, this.title, this.width / 2, 18, 0xffffff);
+        drawContext.drawTextWithShadow(this.textRenderer, serverlist, this.width / 2 - this.width / 4, 40, 0xffffff);
+        drawContext.drawTextWithShadow(this.textRenderer, deleteServer, this.width / 2 + this.width / 4, 40, 0xffffff);
+        super.render(drawContext, mouseX, mouseY, delta);
     }
 
     @Override
@@ -149,11 +150,11 @@ public class Optionsscreen extends Screen {
 
         }
 
-        public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        public void render(DrawContext drawContext, int mouseX, int mouseY, float delta) {
             Text verificationmessage = Text.translatable("rplog.config.optionscreen.verification.message");
-            this.renderBackground(matrices);
-            drawCenteredTextWithShadow(matrices, this.textRenderer, verificationmessage, this.width / 2, this.height / 2 - this.height / 4, 0xffffff);
-            super.render(matrices, mouseX, mouseY, delta);
+            this.renderBackground(drawContext);
+            drawContext.drawCenteredTextWithShadow(this.textRenderer, verificationmessage, this.width / 2, this.height / 2 - this.height / 4, 0xffffff);
+            super.render(drawContext, mouseX, mouseY, delta);
         }
 
         @Override
